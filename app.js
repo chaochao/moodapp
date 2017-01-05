@@ -1,4 +1,4 @@
-// mongodb://chaodev:abcd@ds151028.mlab.com:51028/moodapp
+require('./api/database/db.js');
 var express = require("express");
 var app = express();
 var path = require('path');
@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', routes)
+app.use('/api', routes);
 
 app.listen(app.get('port'), process.env.IP, function(){
   console.log('app on port', app.get('port'));

@@ -3,6 +3,7 @@ var router = express.Router({
   mergeParams: true
 });
 
+var userController = require('./controllers/users.controller.js');
 router
   .route('/')
   .get(function(req, res){
@@ -23,9 +24,7 @@ router
 
 router
   .route('/register')
-  .post(function(req, res){
-    res.json({message: 'this is mood register'});
-  });
+  .post(userController.createOne);
 
 router
   .route('/users/:userId')
