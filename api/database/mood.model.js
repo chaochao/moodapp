@@ -4,7 +4,8 @@ var moodSchema = mongoose.Schema({
   level: {
     type: Number,
     max: 10,
-    min: 0
+    min: 0,
+    required: true
   },
   owner:{
     id:{
@@ -24,3 +25,4 @@ var moodSchema = mongoose.Schema({
     }
   }
 })
+mongoose.model('Mood',moodSchema);

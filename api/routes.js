@@ -4,6 +4,7 @@ var router = express.Router({
 });
 
 var userController = require('./controllers/users.controller.js');
+var moodsController = require('./controllers/moods.controller.js');
 router
   .route('/')
   .get(function(req, res){
@@ -40,9 +41,7 @@ router
 
 router
   .route('/users/:userId/moods')
-  .post(function(req, res){
-    res.json({message: 'this is post modds'});
-  })
+  .post(moodsController.createOne)
   .get(function(req, res){
     res.json({message: 'this is get modds'});
   })
