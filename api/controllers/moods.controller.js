@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Mood = mongoose.model('Mood');
-
 // api/:userId/moods/
 module.exports.createOne = function(req, res){
   if(!req.body.level){
@@ -44,7 +43,7 @@ module.exports.createOne = function(req, res){
   });
 }
 // api/:userId/moods/
-module.exports.getAll = function(req, res){
+module.exports.getAllForOne = function(req, res){
   var userId = req.params.userId;
   User
   .findById(userId)
@@ -56,6 +55,20 @@ module.exports.getAll = function(req, res){
       res.status(500).json(err);
     } else {
       res.status(200).json(user.moods);
+    }
+  });
+}
+// api/:userId/moods/:moodId
+module.exports.getOneForOne = function(req, res){
+  var moodId = req.params.moodId;
+   Mood
+  .findById(moodId)
+  .then(function(err,mood){
+    if(err){
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(mood);
     }
   });
 }

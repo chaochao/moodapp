@@ -1,4 +1,5 @@
 var express = require('express');
+var middleware = require('./middleware.js');
 var router = express.Router({
   mergeParams: true
 });
@@ -13,9 +14,7 @@ router
 
 router
   .route('/users')
-  .get(function(req, res){
-    res.json({message: 'this is mood users get'});
-  });
+  .get(middleware.foo, userController.getAll);
 
 router
   .route('/login')
@@ -29,9 +28,7 @@ router
 
 router
   .route('/users/:userId')
-  .get(function(req, res){
-    res.json({message: 'this is get one user'});
-  })
+  .get(userController.getOne)
   .put(function(req, res){
     res.send("put user id");
   })
@@ -42,7 +39,7 @@ router
 router
   .route('/users/:userId/moods')
   .post(moodsController.createOne)
-  .get(moodsController.getAll)
+  .get(moodsController.getAllForOne)
   .delete(function(req, res){
     res.json({message: 'this is delete modds'});
   })
@@ -50,9 +47,7 @@ router
 
   router
     .route('/users/:userId/moods/:moodId')
-    .get(function(req, res){
-      res.send("this is get one mood")
-    })
+    .get(moodsController.getOneForOne)
     .put(function(req, res){
       res.send("this is put one mood")
     })
