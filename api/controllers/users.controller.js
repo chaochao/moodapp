@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Mood = mongoose.model('Mood');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 
@@ -50,6 +51,24 @@ module.exports.getOne = function(req, res){
   .findById(userId)
   .then(function(user){
     res.status(200).json(user);
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
+  });
+}
+
+module.exports.delete = function(req, res){
+  var userId = req.params.userId;
+  Mood
+  .remove({"owner.id": userId})
+  .then(function(result){
+    User
+    .findOneAndRemove(userId)
+    .then(function(user){
+      console.log(user);
+      res.status(200).json(user);
+    })
   })
   .catch(function(err){
     console.log(err);

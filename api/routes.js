@@ -32,9 +32,7 @@ router
   .put(function(req, res){
     res.send("put user id");
   })
-  .delete(function(req, res){
-    res. soned("delete user");
-  });
+  .delete(userController.delete);
 
 router
   .route('/users/:userId/moods')
