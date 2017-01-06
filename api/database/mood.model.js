@@ -10,9 +10,10 @@ var moodSchema = mongoose.Schema({
   owner:{
     id:{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
-    username: String
+    username: String,
+
   },
   location:{
     country: String,

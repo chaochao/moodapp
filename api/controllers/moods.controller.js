@@ -42,5 +42,20 @@ module.exports.createOne = function(req, res){
     console.log(err);
     res.status(500).json(err);
   });
-
+}
+// api/:userId/moods/
+module.exports.getAll = function(req, res){
+  var userId = req.params.userId;
+  User
+  .findById(userId)
+  .populate('moods')
+  .select('moods')
+  .exec(function(err, user){
+    if(err){
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(user.moods);
+    }
+  });
 }

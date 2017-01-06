@@ -42,9 +42,7 @@ router
 router
   .route('/users/:userId/moods')
   .post(moodsController.createOne)
-  .get(function(req, res){
-    res.json({message: 'this is get modds'});
-  })
+  .get(moodsController.getAll)
   .delete(function(req, res){
     res.json({message: 'this is delete modds'});
   })
