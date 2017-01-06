@@ -58,7 +58,7 @@ module.exports.getOne = function(req, res){
   });
 }
 
-module.exports.delete = function(req, res){
+module.exports.deleteOne = function(req, res){
   var userId = req.params.userId;
   Mood
   .remove({"owner.id": userId})

@@ -72,3 +72,24 @@ module.exports.getOneForOne = function(req, res){
     }
   });
 }
+// api/:userId/moods/:moodId
+module.exports.deleteOne = function(req, res){
+  var moodId = req.params.moodId;
+  var userId = req.params.userId;
+  
+  User.update({moods:{$in:[moodId]}}, {$pull: {'moods': moodId}}, {multi: true})
+  .exec(function(result){
+    Mood
+    .findOneAndRemove({_id:moodId})
+    .then(function(mood){
+      res.status(200).json(mood); // HTTP CODE maybe 204
+    })
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
+  });
+  
+}
+
+

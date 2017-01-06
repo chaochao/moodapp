@@ -32,7 +32,7 @@ router
   .put(function(req, res){
     res.send("put user id");
   })
-  .delete(userController.delete);
+  .delete(userController.deleteOne);
 
 router
   .route('/users/:userId/moods')
@@ -49,9 +49,7 @@ router
     .put(function(req, res){
       res.send("this is put one mood")
     })
-    .delete(function(req, res){
-      res.send("this is delete one mood")
-    })
+    .delete(moodsController.deleteOne)
 
 
   module.exports = router;
