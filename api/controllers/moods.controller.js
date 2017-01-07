@@ -43,7 +43,7 @@ module.exports.createOne = function(req, res){
   });
 }
 // api/:userId/moods/
-module.exports.getAllForOne = function(req, res){
+module.exports.getAll = function(req, res){
   var userId = req.params.userId;
   User
   .findById(userId)
@@ -59,7 +59,7 @@ module.exports.getAllForOne = function(req, res){
   });
 }
 // api/:userId/moods/:moodId
-module.exports.getOneForOne = function(req, res){
+module.exports.getOne = function(req, res){
   var moodId = req.params.moodId;
    Mood
   .findById(moodId)
@@ -89,7 +89,25 @@ module.exports.deleteOne = function(req, res){
     console.log(err);
     res.status(500).json(err);
   });
-  
+}
+// api/:userId/moods/:moodId
+module.exports.editOne = function(req, res){
+  var moodId = req.params.moodId;
+
+  if(!req.body.level || parseInt(req.body.level) > 10
+    || parseInt(req.body.level) < 0 ){
+    res.status(400).json({message:"please provide correct mood level (0~10)"});
+  } else {
+    Mood
+    .findByIdAndUpdate(moodId, req.body, {new: true}, function(err, mood){
+      if(err){
+        console.log(err);
+        res.status(500).json(err);
+      } else {
+        res.status(200).json(mood);
+      }
+    });
+  }
 }
 
 

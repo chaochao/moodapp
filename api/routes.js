@@ -37,7 +37,7 @@ router
 router
   .route('/users/:userId/moods')
   .post(moodsController.createOne)
-  .get(moodsController.getAllForOne)
+  .get(moodsController.getAll)
   .delete(function(req, res){
     res.json({message: 'this is delete modds'});
   })
@@ -45,10 +45,8 @@ router
 
   router
     .route('/users/:userId/moods/:moodId')
-    .get(moodsController.getOneForOne)
-    .put(function(req, res){
-      res.send("this is put one mood")
-    })
+    .get(moodsController.getOne)
+    .put(moodsController.editOne)
     .delete(moodsController.deleteOne)
 
 
