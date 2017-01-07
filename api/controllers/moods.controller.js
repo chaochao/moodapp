@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Mood = mongoose.model('Mood');
+var moment = require('moment');
+var GTE =''
 // api/:userId/moods/
 module.exports.createOne = function(req, res){
   if(!req.body.level){
@@ -45,18 +47,21 @@ module.exports.createOne = function(req, res){
 // api/:userId/moods/
 module.exports.getAll = function(req, res){
   var userId = req.params.userId;
-  User
-  .findById(userId)
-  .populate('moods')
-  .select('moods')
-  .exec(function(err, user){
-    if(err){
-      console.log(err);
-      res.status(500).json(err);
-    } else {
-      res.status(200).json(user.moods);
-    }
+  var start = req.query.start || '2017-01-01';
+  var future = moment().add(2, 'days').format('YYYY-MM-DD');
+  var end = req.query.end || future;
+  Mood
+  .where('owner.id', userId)
+  .where('created_at').lte(end)
+  .where('created_at').gte(start)
+  .then(function(moods){
+    res.status(200).json(moods);
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
   });
+  
 }
 // api/:userId/moods/:moodId
 module.exports.getOne = function(req, res){
