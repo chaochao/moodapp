@@ -8,8 +8,10 @@ var userController = require('./controllers/users.controller.js');
 var moodsController = require('./controllers/moods.controller.js');
 router
   .route('/')
-  .get(function(req, res){
-    res.json({message: 'this is mood app'});
+  .get(function(req, res) {
+    res.json({
+      message: 'this is mood app'
+    });
   });
 
 router
@@ -18,8 +20,10 @@ router
 
 router
   .route('/login')
-  .post(function(req, res){
-    res.json({message: 'this is mood login'});
+  .post(function(req, res) {
+    res.json({
+      message: 'this is mood login'
+    });
   });
 
 router
@@ -29,7 +33,7 @@ router
 router
   .route('/users/:userId')
   .get(userController.getOne)
-  .put(function(req, res){
+  .put(function(req, res) {
     res.send("put user id");
   })
   .delete(userController.deleteOne);
@@ -38,16 +42,16 @@ router
   .route('/users/:userId/moods')
   .post(moodsController.createOne)
   .get(moodsController.getAll)
-  .delete(function(req, res){
-    res.json({message: 'this is delete modds'});
-  })
-  ;
+  .delete(function(req, res) {
+    res.json({
+      message: 'this is delete modds'
+    });
+  });
 
-  router
-    .route('/users/:userId/moods/:moodId')
-    .get(moodsController.getOne)
-    .put(moodsController.editOne)
-    .delete(moodsController.deleteOne)
+router
+  .route('/users/:userId/moods/:moodId')
+  .get(moodsController.getOne)
+  .put(moodsController.editOne)
+  .delete(moodsController.deleteOne)
 
-
-  module.exports = router;
+module.exports = router;

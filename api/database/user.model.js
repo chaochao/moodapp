@@ -27,17 +27,20 @@ var userShema = new mongoose.Schema({
   }],
   gender: String,
   age: Number,
-  location:{
+  location: {
     country: String,
     province: String,
     state: String,
     city: String,
-    coordinates:{
-      type:[Number],
-      index:'2dsphere'
+    coordinates: {
+      type: [Number],
+      index: '2dsphere'
     }
   },
-  created_at: { type: Date, default: Date.now }
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-mongoose.model('User',userShema);
+mongoose.model('User', userShema);
