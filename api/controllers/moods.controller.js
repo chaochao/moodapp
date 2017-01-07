@@ -49,10 +49,14 @@ module.exports.getAll = function(req, res) {
     var start = req.query.start || '2017-01-01';
     var future = moment().add(2, 'days').format('YYYY-MM-DD');
     var end = req.query.end || future;
+    var limit = parseInt(req.query.limit) || 100;
+    var offset = parseInt(req.query.offset) || 0;
     Mood
       .where('owner.id', userId)
       .where('created_at').lte(end)
       .where('created_at').gte(start)
+      .skip(offset)
+      .limit(limit)
       .then(function(moods) {
         res.status(200).json(moods);
       })
