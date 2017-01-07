@@ -26,7 +26,6 @@ module.exports.createOne = function(req, res) {
     res.status(500).json(err);
   })
 }
-
 // api/users
 module.exports.getAll = function(req, res) {
     var limit = parseInt(req.query.limit) || 100;
@@ -44,7 +43,7 @@ module.exports.getAll = function(req, res) {
         }
       });
   }
-  // api/users/:userId
+// api/users/:userId
 module.exports.getOne = function(req, res) {
   var userId = req.params.userId;
   User
@@ -57,7 +56,7 @@ module.exports.getOne = function(req, res) {
       res.status(500).json(err);
     });
 }
-
+// api/users/:userId
 module.exports.deleteOne = function(req, res) {
   var userId = req.params.userId;
   Mood
