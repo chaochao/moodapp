@@ -1,62 +1,94 @@
 console.log("main.controller");
 moodApp.controller('MainController', MainController)
-function MainController($scope){
+
+function MainController($scope) {
   var self = this;
-  $scope.title ="scope main"
-  this.title =" self main"
+  $scope.title = "scope main"
+  this.title = " self main"
 }
 
 moodApp.controller('OwnMoodController', OwnMoodController)
-function OwnMoodController($scope){
-  var self = this;
-  $scope.title ="scope own";
-  this.title =" self own";
 
+function OwnMoodController($scope, $http) {
+  var self = this; 
+  $scope.title = "scope own";
+  this.title = " self own";
+  $http.get('http://localhost:3000/api/users/58707824e1f21598e24467b5/moods')
+  .then(function(moods){
+    $scope.moods = moods.data;
+    console.log($scope.moods);
+    var moodArray =[];
+    $scope.moods.forEach(function(mood){
+      moodArray.push(mood.level);
+    });
+    console.log(moodArray);
+    $scope.chartConfig.series.push({
+      data: moodArray
+    })
+  })
+  .catch(function(err){
+    console.log(err);
+  })
   
+  $scope.addSeries = function() {
+    var rnd = []
+    for (var i = 0; i < 10; i++) {
+      rnd.push(Math.floor(Math.random() * 20) + 1)
+    }
+    $scope.chartConfig.series.push({
+      data: rnd
+    })
+  }
+
   $scope.chartConfig = {
-  options: {
-    //This is the Main Highcharts chart config. Any Highchart options are valid here.
-    //will be overriden by values specified below.
-    chart: {
-       type: 'bar'
-    },
-    tooltip: {
-       style: {
+    options: {
+      //This is the Main Highcharts chart config. Any Highchart options are valid here.
+      //will be overriden by values specified below.
+      chart: {
+        type: 'line'
+      },
+      tooltip: {
+        style: {
           padding: 10,
           fontWeight: 'bold'
-       }
+        }
+      }
+    },
+    //The below properties are watched separately for changes.
+    //Series object (optional) - a list of series using normal highcharts series options.
+    series: [{
+      data: [10, 15, 12, 8, 7, 3, 4, 7, 2, 4, 9]
+    }, {
+      data: [10, 15, 12, 8, 7, 3, 4, 7, 2, 4, 9]
+
+    }],
+    //Title configuration (optional)
+    title: {
+      text: 'your mood'
+    },
+    //Boolean to control showng loading status on chart (optional)
+    //Could be a string if you want to show specific loading text.
+    loading: false,
+    //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
+    //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
+    xAxis: {
+      currentMin: 0,
+      currentMax: 10,
+      title: {
+        text: 'values'
+      }
+    },
+    //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
+    useHighStocks: false,
+    //size (optional) if left out the chart will default to size of the div or something sensible.
+    size: {
+      width: 400,
+      height: 300
+    },
+    //function (optional)
+    func: function(chart) {
+      //setup some logic for the chart
     }
-  },
-  //The below properties are watched separately for changes.
-  //Series object (optional) - a list of series using normal highcharts series options.
-  series: [{
-    data: [10, 15, 12, 8, 7,3,4,7,2,4,9]
-  }],
-  //Title configuration (optional)
-  title: {
-    text: 'Hello'
-  },
-  //Boolean to control showng loading status on chart (optional)
-  //Could be a string if you want to show specific loading text.
-  loading: false,
-  //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
-  //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
-  xAxis: {
-  currentMin: 0,
-  currentMax: 10,
-  title: {text: 'values'}
-  },
-  //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
-  useHighStocks: false,
-  //size (optional) if left out the chart will default to size of the div or something sensible.
-  size: {
-  width: 400,
-  height: 300
-  },
-  //function (optional)
-  func: function (chart) {
-  //setup some logic for the chart
-  }
   };
 
 
@@ -64,8 +96,9 @@ function OwnMoodController($scope){
 }
 
 moodApp.controller('OtherMoodsController', OtherMoodsController)
-function OtherMoodsController($scope){
+
+function OtherMoodsController($scope) {
   var self = this;
-  $scope.title ="scope other";
-  this.title =" self other";
+  $scope.title = "scope other";
+  this.title = " self other";
 }
