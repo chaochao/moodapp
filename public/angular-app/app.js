@@ -1,1 +1,1 @@
-var moodApp = angular.module('moodApp',['ngRoute', 'angular-jwt']);
+var moodApp = angular.module('moodApp',['ngRoute', 'angular-jwt', 'highcharts-ng']);
