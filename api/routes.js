@@ -20,11 +20,7 @@ router
 
 router
   .route('/login')
-  .post(function(req, res) {
-    res.json({
-      message: 'this is mood login'
-    });
-  });
+  .post(userController.login);
 
 router
   .route('/register')
