@@ -2,48 +2,49 @@
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-main">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#!/">
         <img src="" alt="brand">
       </a>
     </div>
     <div class="navbar-collapse collapse" id="navbar-collapse-main">
-        <ul class="nav navbar-nav hidden-xs">
-          <li class="active">
-            <a href="#!/">Home</a>
-          </li>
-          <li>
-            <a href="#!/ownmood">Your Mood</a>
-          </li>
-          <li>
-            <a href="#!/othermoods">Other Moods</a>
-          </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
-          <li>
-            <a class="app-notifications" href="notifications/index.html">
-              <span class="icon icon-bell"></span>
-            </a>
-          </li>
-          <li>
-            <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover" data-original-title="" title="">
-              <img class="img-circle" src="">
-            </button>
-          </li>
-        </ul>
-
-        <form class="navbar-form navbar-right" role="login">
-          <div class="form-group">
-            <input type="text" class="form-control" data-action="grow" placeholder="username">
-            <input type="text" class="form-control" data-action="grow" placeholder="password">
-            <button class="btn btn-default-outline"type="button">Log in</button>
-          </div>
-        </form>
+      <ul class="nav navbar-nav hidden-xs">
+        <li class="active">
+          <a href="#!/">Home</a>
+        </li>
+        <li>
+          <a href="#!/ownmood">Your Mood</a>
+        </li>
+        <li>
+          <a href="#!/othermoods">Other Moods</a>
+        </li>
+      </ul>
+      <ul ng-show="isLoggedIn()" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+        <li >
+          <a class="app-notifications" href="../notifications/index.html">
+            <span class="icon icon-bell"></span>
+          </a>
+        </li>
+        <li>
+          <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
+          <img class="img-circle" src="">
+          </button>
+        </li>
+        <li class="navbar-right">
+          <a href="" ng-click="logout()">Logout</a>
+        </li>
+      </ul>
+      <form  ng-show="!isLoggedIn()" class="navbar-form navbar-right" role="login" ng-submit="login()">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="username" placeholder="username">
+          <input type="text" class="form-control" ng-model="password" placeholder="password">
+          <button type="submit"  class="btn btn-default-outline">Login</button>
+        </div>
+      </form>
     </div>
   </div>
 </nav>
