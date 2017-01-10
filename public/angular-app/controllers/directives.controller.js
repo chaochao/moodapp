@@ -10,15 +10,14 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
     console.log('logout');
     AuthFactory.isLoggedIn = false;
     AuthFactory.username = '';
+    AuthFactory.currentUserId = '';
     delete $window.sessionStorage.token;
     delete $window.sessionStorage.username;
+    delete $window.sessionStorage.currentUserId;
     $location.path('/');
   }
 
   $scope.login= function(){
-    console.log("hi");
-    console.log($scope.username);
-    console.log($scope.password);
     if($scope.username && $scope.password){
       var loginUser = {
       username: $scope.username,
@@ -28,17 +27,16 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
       $http.post('/api/login',loginUser)
       .then(function(res){
         if(res.data.success){
-          console.log(jwtHelper);
-
           var decrptToken = jwtHelper.decodeToken(res.data.token);
-          
           AuthFactory.isLoggedIn = true;
           AuthFactory.username = decrptToken.username;
-          
+          AuthFactory.currentUserId = decrptToken.id;
           $window.sessionStorage.username = decrptToken.username;
           $window.sessionStorage.token = res.data.token;
+          $window.sessionStorage.currentUserId = decrptToken.id;
           $scope.username = ''
           $scope.password = ''
+          $window.location.reload();
         }else {
           //show error message
          

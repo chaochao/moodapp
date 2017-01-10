@@ -2,7 +2,8 @@ console.log("factories");
 moodApp.factory('AuthFactory', function() {
   return {
     username: '',
-    isLoggedIn: false
+    isLoggedIn: false,
+    currentUserId: ''
   };
 });
 
@@ -16,7 +17,7 @@ function AuthInterceptor($location, $q, $window, AuthFactory) {
     response: response,
     responseError: responseError
   };
-  
+
   function request(config) {
     config.headers = config.headers || {};
     if ($window.sessionStorage.token) {
@@ -30,11 +31,13 @@ function AuthInterceptor($location, $q, $window, AuthFactory) {
       if ($window.sessionStorage.token && !AuthFactory.isLoggedIn) {
         AuthFactory.isLoggedIn = true
         AuthFactory.username = $window.sessionStorage.username;
+        AuthFactory.currentUserId = $window.sessionStorage.currentUserId;
       }
     }
     if (response.status === 401) {
       AuthFactory.isLoggedIn = false;
       AuthFactory.username = '';
+      AuthFactory.currentUserId = '';
     }
     return response || $q.when(response);
   }
@@ -43,6 +46,8 @@ function AuthInterceptor($location, $q, $window, AuthFactory) {
     if (rejection.status === 401 || rejection.status === 403) {
       delete $window.sessionStorage.token;
       AuthFactory.isLoggedIn = false;
+      AuthFactory.username = '';
+      AuthFactory.currentUserId =''
       $location.path('/');
     }
     return $q.reject(rejection);

@@ -31,7 +31,8 @@ module.exports.createOne = function(req, res) {
                 res.status(201)
                   .json({
                     success: true,
-                    moodId: userUpdated.moods[userUpdated.moods.length - 1]
+                    moodId: userUpdated.moods[userUpdated.moods.length - 1],
+                    mood: mood
                   });
               }
             });

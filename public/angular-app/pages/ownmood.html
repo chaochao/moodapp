@@ -1,2 +1,9 @@
-<button ng-click="addSeries()">Add Series</button>
-<highchart id="chart1" config="chartConfig"></highchart>
+<div ng-show="isLoggedIn()">
+  <button ng-click="addSeries()">Add Series</button>
+  <highchart id="chart1" config="chartConfig"></highchart>
+  <form ng-submit="submitMoodLevel()">
+    <p> range 0 - 10 </p>
+    <input  id='moodLevelInput' type='number' max='10' min='0' ng-model="newLevel" placeholder='your mood level'>
+    <button type="submit"  class="btn btn-default-outline">Submit</button>
+  </form>
+</div>

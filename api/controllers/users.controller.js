@@ -99,7 +99,7 @@ module.exports.login = function(req, res) {
     })
     .then(function(user) {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
-        token = jwt.sign({username: user.username}, 'this is secret', {expiresIn: 3600 * 24});
+        token = jwt.sign({username: user.username, id: user._id}, 'this is secret', {expiresIn: 3600 * 24});
         res.status(200).json({
           success: true,
           token: token

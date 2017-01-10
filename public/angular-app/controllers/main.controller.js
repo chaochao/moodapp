@@ -9,27 +9,51 @@ function MainController($scope) {
 
 moodApp.controller('OwnMoodController', OwnMoodController)
 
-function OwnMoodController($scope, $http) {
-  var self = this; 
+function OwnMoodController($scope, $http, AuthFactory) {
+  // when in this page, must logged in
+  var self = this;
   $scope.title = "scope own";
   this.title = " self own";
-  $http.get('http://localhost:3000/api/users/58707824e1f21598e24467b5/moods')
-  .then(function(moods){
-    $scope.moods = moods.data;
-    console.log($scope.moods);
-    var moodArray =[];
-    $scope.moods.forEach(function(mood){
-      moodArray.push(mood.level);
-    });
-    console.log(moodArray);
-    $scope.chartConfig.series.push({
-      data: moodArray
+  var moodUrl = 'http://localhost:3000/api/users/' + AuthFactory.currentUserId + '/moods';
+  if (AuthFactory.isLoggedIn) {
+    $http.get(moodUrl)
+    .then(function(moods) {
+      $scope.moods = moods.data;
+      $scope.moodLevelArray = [];
+      $scope.moods.forEach(function(mood) {
+        $scope.moodLevelArray.push(mood.level);
+      });
+      console.log($scope.moodLevelArray);
+      $scope.chartConfig.series.push({
+        data: $scope.moodLevelArray
+      })
     })
-  })
-  .catch(function(err){
-    console.log(err);
-  })
-  
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
+  $scope.isLoggedIn = function(){
+    return AuthFactory.isLoggedIn;
+  }
+
+  $scope.submitMoodLevel = function() {
+    console.log("submit");
+    console.log($scope.newLevel);
+    var mood = {
+      level: $scope.newLevel
+    }
+    $http.post(moodUrl,mood).then(function(res){
+      console.log(res);
+      $scope.moodLevelArray.push($scope.newLevel)
+      $scope.moods.push(res.data.mood);
+      $scope.newLevel = ''
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+  }
+
   $scope.addSeries = function() {
     var rnd = []
     for (var i = 0; i < 10; i++) {
@@ -56,12 +80,7 @@ function OwnMoodController($scope, $http) {
     },
     //The below properties are watched separately for changes.
     //Series object (optional) - a list of series using normal highcharts series options.
-    series: [{
-      data: [10, 15, 12, 8, 7, 3, 4, 7, 2, 4, 9]
-    }, {
-      data: [10, 15, 12, 8, 7, 3, 4, 7, 2, 4, 9]
-
-    }],
+    series: [],
     //Title configuration (optional)
     title: {
       text: 'your mood'
@@ -73,7 +92,7 @@ function OwnMoodController($scope, $http) {
     //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
     xAxis: {
       currentMin: 0,
-      currentMax: 10,
+      currentMax: 20,
       title: {
         text: 'values'
       }
