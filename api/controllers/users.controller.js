@@ -32,6 +32,7 @@ module.exports.getAll = function(req, res) {
     var offset = parseInt(req.query.offset) || 0;
     User
       .find()
+      .populate('moods')
       .skip(offset)
       .limit(limit)
       .exec(function(err, users) {
@@ -48,6 +49,7 @@ module.exports.getOne = function(req, res) {
     var userId = req.params.userId;
     User
       .findById(userId)
+      .populate('moods')
       .then(function(user) {
         if (user) {
           res.status(200).json(user);
