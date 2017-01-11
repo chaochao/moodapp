@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var dburl = 'mongodb://localhost:27017/moodapp'
 var env = process.env.NODE_ENV || 'development'
-dburl = env === 'development' ? dburl : process.env.databaseUrl;
+dburl = env === 'development' ? dburl : 'mongodb://chaodev:abcd@ds151028.mlab.com:51028/moodapp';
 
 mongoose.connect(dburl);
 mongoose.Promise = global.Promise;
