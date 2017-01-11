@@ -14,7 +14,7 @@ function OwnMoodController($scope, $http, AuthFactory) {
   var self = this;
   $scope.title = "scope own";
   this.title = " self own";
-  var moodUrl = 'http://localhost:3000/api/users/' + AuthFactory.currentUserId + '/moods';
+  var moodUrl = '/api/users/' + AuthFactory.currentUserId + '/moods';
   if (AuthFactory.isLoggedIn) {
     $http.get(moodUrl)
     .then(function(moods) {
