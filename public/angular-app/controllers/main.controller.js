@@ -9,65 +9,69 @@ function MainController($scope) {
 
 moodApp.controller('OwnMoodController', OwnMoodController)
 
-function OwnMoodController($scope, $http, AuthFactory) {
+function OwnMoodController($window, $scope, $http, AuthFactory) {
   // when in this page, must logged in
   var self = this;
-  $scope.title = "scope own";
-  this.title = " self own";
   var moodUrl = '/api/users/' + AuthFactory.currentUserId + '/moods';
-  if (AuthFactory.isLoggedIn) {
-    $http.get(moodUrl)
-    .then(function(moods) {
-      $scope.moods = moods.data;
-      $scope.moodLevelArray = [];
-      $scope.moods.forEach(function(mood) {
-        $scope.moodLevelArray.push(mood.level);
-      });
-      console.log($scope.moodLevelArray);
-      $scope.chartConfig.series.push({
-        data: $scope.moodLevelArray
-      })
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
+
+  $scope.isLoggedIn = function() {
+    return AuthFactory.isLoggedIn;
   }
 
-  $scope.isLoggedIn = function(){
-    return AuthFactory.isLoggedIn;
+  genMoodPoint = function(mood) {
+    var moodTime = new Date(mood.created_at);
+    var moodPoint = [
+      moodTime.getTime(), mood.level
+    ]
+    return moodPoint;
+  }
+
+  if (AuthFactory.isLoggedIn) {
+    $http.get(moodUrl)
+      .then(function(respond) {
+        var moodLevelArray = [];
+        respond.data.forEach(function(mood) {
+          var moodPoint = genMoodPoint(mood);
+          moodLevelArray.push(moodPoint);
+        });
+        $scope.chartConfig.series.push({
+          name: 'mood',
+          data: moodLevelArray
+        })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
   }
 
   $scope.submitMoodLevel = function() {
     console.log("submit");
     console.log($scope.newLevel);
-    var mood = {
-      level: $scope.newLevel
-    }
-    $http.post(moodUrl,mood).then(function(res){
-      console.log(res);
-      $scope.moodLevelArray.push($scope.newLevel)
-      $scope.moods.push(res.data.mood);
-      $scope.newLevel = ''
-    })
-    .catch(function(err){
-      console.log(err);
-    });
-  }
 
-  $scope.addSeries = function() {
-    var rnd = []
-    for (var i = 0; i < 10; i++) {
-      rnd.push(Math.floor(Math.random() * 20) + 1)
+    var timestamp = Date.now();
+    var moodPoint =[timestamp, $scope.newLevel];
+    // $scope.chartConfig.series[0].data.push(moodPoint);
+
+    var newMood = {
+      level: $scope.newLevel,
+      created_at: timestamp
     }
-    $scope.chartConfig.series.push({
-      data: rnd
-    })
+    $http.post(moodUrl, newMood).then(function(res) {
+        console.log(res);
+        // var moodPoint = mood
+        // $scope.moodLevelArray.push(moodPoint)
+        // $scope.moods.push(res.data.mood);
+        $scope.chartConfig.series[0].data.push(moodPoint);
+        // $window.location.reload();
+        $scope.newLevel = '';
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   }
 
   $scope.chartConfig = {
     options: {
-      //This is the Main Highcharts chart config. Any Highchart options are valid here.
-      //will be overriden by values specified below.
       chart: {
         type: 'line'
       },
@@ -78,35 +82,29 @@ function OwnMoodController($scope, $http, AuthFactory) {
         }
       }
     },
-    //The below properties are watched separately for changes.
-    //Series object (optional) - a list of series using normal highcharts series options.
+
     series: [],
-    //Title configuration (optional)
     title: {
       text: 'your mood'
     },
-    //Boolean to control showng loading status on chart (optional)
-    //Could be a string if you want to show specific loading text.
-    loading: false,
-    //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
-    //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
-    xAxis: {
-      currentMin: 0,
-      currentMax: 20,
-      title: {
-        text: 'values'
-      }
+    subtitle: {
+      text: 'subtitle',
+      x: -20
     },
-    //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
-    useHighStocks: false,
-    //size (optional) if left out the chart will default to size of the div or something sensible.
+    loading: false,
+    xAxis: {
+      title: {
+        text: 'time'
+      },
+      type: 'datetime'
+    },
+    yAxis: {
+      max: 10,
+      min: 0
+    },
     size: {
       width: 400,
       height: 300
-    },
-    //function (optional)
-    func: function(chart) {
-      //setup some logic for the chart
     }
   };
 
