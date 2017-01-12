@@ -38,11 +38,7 @@ router
   .route('/users/:userId/moods')
   .post(moodsController.createOne)
   .get(moodsController.getAll)
-  .delete(function(req, res) {
-    res.json({
-      message: 'this is delete modds'
-    });
-  });
+  .delete(moodsController.deleteAll);
 
 router
   .route('/users/:userId/moods/:moodId')

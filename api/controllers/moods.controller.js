@@ -111,6 +111,22 @@ module.exports.deleteOne = function(req, res) {
         res.status(500).json(err);
       });
   }
+//api/:userId/moods
+module.exports.deleteAll = function(req, res) {
+  var userId = req.params.userId;
+  User
+  .findById(userId)
+  .populate('moods')
+  .then(function(user){
+    user.moods.forEach(function(mood){
+      mood.remove();
+    });
+    res.status(204).json();
+  })
+  .catch(function(err){
+    res.status(500).json(err);
+  });
+}
   // api/:userId/moods/:moodId
 module.exports.editOne = function(req, res) {
   var moodId = req.params.moodId;
