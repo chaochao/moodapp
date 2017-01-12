@@ -1,2 +1,3 @@
 <p>{{title}}</p>
 <p>{{vm.title}}</p>
+<highchart ng-repeat = "chartConfig in chartConfigs" id="{{chartConfig.id}}" config="chartConfig.config"></highchart>
