@@ -20,10 +20,7 @@ function OwnMoodController($window, $scope, $http, AuthFactory) {
 
   genMoodPoint = function(mood) {
     var moodTime = new Date(mood.created_at);
-    var moodPoint = [
-      moodTime.getTime(), mood.level
-    ]
-    return moodPoint;
+    return [moodTime.getTime(), mood.level];
   }
 
   if (AuthFactory.isLoggedIn) {
@@ -49,7 +46,7 @@ function OwnMoodController($window, $scope, $http, AuthFactory) {
     console.log($scope.newLevel);
 
     var timestamp = Date.now();
-    var moodPoint =[timestamp, $scope.newLevel];
+    var moodPoint = [timestamp, $scope.newLevel];
     // $scope.chartConfig.series[0].data.push(moodPoint);
 
     var newMood = {
