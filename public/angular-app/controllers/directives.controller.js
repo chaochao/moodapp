@@ -1,6 +1,6 @@
 console.log("directives.controller");
 moodApp.controller('NavBarController', NavBarLoginController)
-function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, jwtHelper){
+function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, jwtHelper, Flash){
   var self = this;
   self.title = "NavBarLoginController";
   $scope.isLoggedIn = function(){
@@ -8,6 +8,8 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
   }
   $scope.logout = function(){
     console.log('logout');
+    var message = 'See you '+ AuthFactory.username +'!';
+    Flash.create('danger', message);
     AuthFactory.isLoggedIn = false;
     AuthFactory.username = '';
     AuthFactory.currentUserId = '';
@@ -36,19 +38,26 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
           $window.sessionStorage.currentUserId = decrptToken.id;
           $scope.username = ''
           $scope.password = ''
-          $window.location.reload();
-        }else {
-          //show error message
-         
+          $location.path('/');
+          var message = 'Welcom back '+ AuthFactory.username +' Logged In !';
+          Flash.create('success', message);
         }
       })
       .catch(function(err){
         console.log(err);
-        //show error message
-        //windows flash
+        $scope.username = ''
+          $scope.password = ''
+        var message = 'Sorry, wrong username or password.';
+        Flash.create('danger', message);
       });  
     } else {
-      
+      var message = 'Please provide username and password';
+      Flash.create('warning', message);
     }
   }
+  $scope.success = function() {
+    console.log('success')
+    var message = '<strong>Well done!</strong> You successfully read this important alert message.';
+    Flash.create('success', message);
+  };
 }

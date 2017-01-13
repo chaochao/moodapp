@@ -1,4 +1,4 @@
-var moodApp = angular.module('moodApp',['ngRoute', 'angular-jwt', 'highcharts-ng']);
+var moodApp = angular.module('moodApp',['ngRoute', 'angular-jwt', 'highcharts-ng', 'ngAnimate', 'ngFlash']);
 moodApp.config(function($httpProvider){
   
   $httpProvider.interceptors.push('AuthInterceptor');
