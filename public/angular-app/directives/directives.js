@@ -8,3 +8,16 @@ function navBar(){
     replace: true
   };
 }
+
+moodApp.directive('mood', mood);
+function mood(){
+  return {
+    restrict: 'E',
+    templateUrl:'angular-app/directives/mood.html',
+    replace: true,
+    scope:{
+      mood: '=',
+      deleteMood: '&'
+    }
+  }
+}

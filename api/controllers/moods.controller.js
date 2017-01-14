@@ -11,6 +11,7 @@ module.exports.createOne = function(req, res) {
       })
       return;
     }
+    // may need to filter out something
     var userId = req.params.userId;
     User
       .findById(userId)

@@ -44,7 +44,6 @@ function MoodServices() {
         min: 0
       },
       size: {
-        width: 400,
         height: 300
       }
     };

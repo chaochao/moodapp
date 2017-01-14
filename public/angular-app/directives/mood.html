@@ -1,0 +1,15 @@
+<li class="media list-group-item p-a m-t">
+  <a class="media-left" href="">
+    <!-- here will add more picture -->
+    <img style="background-color: #3097D1; width:20px; height:20px;" class="media-object img-circle"/>
+  </a>
+  <div class="media-body">
+    <div class="media-heading">
+      <small class="pull-right text-muted">{{mood.created_at}}</small>
+      <h6>{{mood.owner.username}}</h6>
+    </div>
+    <h6>mood: {{mood.level}}</h6>
+    <p ng-if="mood.description">{{mood.description}}</p>
+  </div>
+  
+</li>

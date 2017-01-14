@@ -2,6 +2,7 @@
   width: 115px
 }
 
+
 .alert {
   padding: 15px;
   margin-bottom: 20px;
@@ -142,4 +143,13 @@ button.close {
 
 .alert.ng-leave-active {
     opacity: 0;
+}
+
+.fade.ng-enter{
+  transition: 0.5s liner all;
+  opacity:0;
+}
+
+.fade.ng-enter.ng-enter-active {
+  opacity:1;
 }

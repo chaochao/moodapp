@@ -10,6 +10,10 @@ var moodSchema = mongoose.Schema({
     min: 0,
     required: true
   },
+  description: {
+    type: String,
+    max: 500
+  },
   owner: {
     id: {
       type: mongoose.Schema.Types.ObjectId,

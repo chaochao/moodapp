@@ -24,8 +24,11 @@
         </li>
       </ul>
       <ul ng-show="isLoggedIn()" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+        <li>
+          <p class="navbar-text">Welcome back {{loggedInUser }}</p>
+        </li>
         <li >
-          <a class="app-notifications" href="../notifications/index.html">
+          <a class="app-notifications" href="">
             <span class="icon icon-bell"></span>
           </a>
         </li>
