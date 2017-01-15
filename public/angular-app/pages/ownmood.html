@@ -7,7 +7,7 @@
         <highchart id="{{chartId}}" config="chartConfig" style="width: 100%"></highchart>
         <form ng-submit="submitMoodLevel()">
           <p> range 0 - 10 </p>
-          <input  id='moodLevelInput' type='number' max='10' min='0' ng-model="newLevel" placeholder='your mood level'>
+          <input  id='moodLevelInput'  required type='number' max='10' min='0' ng-model="newLevel" placeholder='your mood level'>
           <textarea row='2' placeholder="Say something..." class=" w-full m-t m-b form-control" ng-model="description"></textarea>
           <button type="submit"  class="btn btn-default-outline">Submit</button>
         </form>
