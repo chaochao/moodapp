@@ -13,7 +13,7 @@
           <button type="submit" class="btn btn-default-outline">Submit</button>
         </form>
         <ul class="media-list m-t m-b">
-          <li ng-repeat="mood in moods">
+          <li ng-repeat="mood in moods | reverse">
             <mood mood="mood" delete-article="deleteMood(moodId)" ></mood>
           </li>
         </ul>

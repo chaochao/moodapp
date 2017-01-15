@@ -22,39 +22,38 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
 
   if (AuthFactory.isLoggedIn) {
     $http.get(moodUrl)
-      .then(function(response) {
-        $scope.moods = response.data;
-        var moodLevelArray = [];
-        $scope.moods.forEach(function(mood) {
-          var moodPoint = MoodServices.genMoodPoint(mood);
-          moodLevelArray.push(moodPoint);
-          mood.backgroundColor = MoodServices.genBackgroundColor(mood.level);
-        });
-        $scope.chartConfig.series.push({
-          name: 'mood',
-          data: moodLevelArray
-        });
-        $scope.loadingCompleted = true;
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
+    .then(function(response) {
+      $scope.moods = response.data;
+      var moodLevelArray = [];
+      $scope.moods.forEach(function(mood) {
+        var moodPoint = MoodServices.genMoodPoint(mood);
+        moodLevelArray.push(moodPoint);
+        mood.backgroundColor = MoodServices.genBackgroundColor(mood.level);
+      });
+      $scope.chartConfig.series.push({
+        name: 'mood',
+        data: moodLevelArray
+      });
+      $scope.loadingCompleted = true;
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
   }
 
   $scope.submitMoodLevel = function() {
-
     var timestamp = Date.now();
     var moodPoint = [timestamp, $scope.newLevel];
-
     var newMood = {
       level: $scope.newLevel,
       description: $scope.description,
       created_at: timestamp
     }
     $http.post(moodUrl, newMood).then(function(res) {
+      // For display
+      res.data.mood.backgroundColor = MoodServices.genBackgroundColor(res.data.mood.level)
       $scope.moods.push(res.data.mood);
       $scope.chartConfig.series[0].data.push(moodPoint);
-      // $window.location.reload();
       $scope.newLevel = '';
       $scope.description = '';
     })
