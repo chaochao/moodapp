@@ -25,9 +25,10 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
       .then(function(response) {
         $scope.moods = response.data;
         var moodLevelArray = [];
-        response.data.forEach(function(mood) {
+        $scope.moods.forEach(function(mood) {
           var moodPoint = MoodServices.genMoodPoint(mood);
           moodLevelArray.push(moodPoint);
+          mood.backgroundColor = MoodServices.genBackgroundColor(mood.level);
         });
         $scope.chartConfig.series.push({
           name: 'mood',
@@ -41,8 +42,6 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
   }
 
   $scope.submitMoodLevel = function() {
-    console.log("submit");
-    console.log($scope.newLevel);
 
     var timestamp = Date.now();
     var moodPoint = [timestamp, $scope.newLevel];

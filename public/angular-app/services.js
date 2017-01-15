@@ -10,7 +10,22 @@ function MoodServices() {
     var moodTime = new Date(mood.created_at);
     return [moodTime.getTime(), mood.level];
   }
-
+  var ColorMap = {
+    '0': '#000000',
+    '1': '#090023',
+    '2': '#02073e',
+    '3': '#091275',
+    '4': '#000fbf',
+    '5': '#005ebf',
+    '6': '#0070bf',
+    '7': '#0093bf',
+    '8': '#00bf93',
+    '9': '#00bf67',
+    '10': '#03bf00'
+  }
+  this.genBackgroundColor = function(level) {
+    return ColorMap[level];
+  }
   this.genHighChartBasicConfig = function() {
     return {
       options: {
