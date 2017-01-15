@@ -52,7 +52,7 @@
         <li><a href="#!/">Home</a></li>
         <li><a href="#!/ownmood">Your Mood</a></li>
         <li><a href="#!/othermoods">Other Moods</a></li>
-        <li><a href="" ng-click="logout()">Logout</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
