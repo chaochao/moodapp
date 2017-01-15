@@ -12,9 +12,9 @@ moodApp.controller('OwnMoodController', OwnMoodController)
 function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
   // when in this page, must logged in
   var self = this;
+  $scope.chartConfig = MoodServices.genHighChartBasicConfig();
   $scope.chartId = 'ownchart';
   var moodUrl = '/api/users/' + AuthFactory.currentUserId + '/moods';
-  $scope.currentUser = "test foo";
   $scope.isLoggedIn = function() {
     return AuthFactory.isLoggedIn;
   }
@@ -44,7 +44,6 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
 
     var timestamp = Date.now();
     var moodPoint = [timestamp, $scope.newLevel];
-    // $scope.chartConfig.series[0].data.push(moodPoint);
 
     var newMood = {
       level: $scope.newLevel,
@@ -52,23 +51,17 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
       created_at: timestamp
     }
     $http.post(moodUrl, newMood).then(function(res) {
-        console.log(res);
-        // var moodPoint = mood
-        // $scope.moodLevelArray.push(moodPoint)
-        $scope.moods.push(res.data.mood);
-        $scope.chartConfig.series[0].data.push(moodPoint);
-        // $window.location.reload();
-        $scope.newLevel = '';
-        $scope.description = '';
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+      $scope.moods.push(res.data.mood);
+      $scope.chartConfig.series[0].data.push(moodPoint);
+      // $window.location.reload();
+      $scope.newLevel = '';
+      $scope.description = '';
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   }
-  $scope.chartConfig = MoodServices.genHighChartBasicConfig();
 }
-
-
 
 moodApp.controller('OtherMoodsController', OtherMoodsController)
 
@@ -82,32 +75,35 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodServices) {
   userUrl = '/api/users';
   $http.get(userUrl).then(function(response) {
 
-    response.data.forEach(function(user) {
-      if (AuthFactory.isLoggedIn) {
-        if (user._id !== AuthFactory.currentUserId) {
+      response.data.forEach(function(user) {
+        if (AuthFactory.isLoggedIn) {
+          if (user._id !== AuthFactory.currentUserId) {
+            originalMoodsArray.push(user.moods);
+          }
+        } else {
           originalMoodsArray.push(user.moods);
         }
-      } else {
-        originalMoodsArray.push(user.moods);
-      }
-    });
-    console.log(originalMoodsArray);
-    originalMoodsArray.forEach(function(moodsForOneUser,index) {
-      var moodPoints = []
-      moodsForOneUser.forEach(function(mood) {
-        moodPoints.push(MoodServices.genMoodPoint(mood));
-      })
-      $scope.moodPointsArray.push(moodPoints);
-      var newChartConfig = MoodServices.genHighChartBasicConfig();
-      newChartConfig.series.push({
-        data: moodPoints
       });
-      $scope.chartConfigs.push({id:"chart"+index, config:newChartConfig});
+      console.log(originalMoodsArray);
+      originalMoodsArray.forEach(function(moodsForOneUser, index) {
+        var moodPoints = []
+        moodsForOneUser.forEach(function(mood) {
+          moodPoints.push(MoodServices.genMoodPoint(mood));
+        })
+        $scope.moodPointsArray.push(moodPoints);
+        var newChartConfig = MoodServices.genHighChartBasicConfig();
+        newChartConfig.series.push({
+          data: moodPoints
+        });
+        $scope.chartConfigs.push({
+          id: "chart" + index,
+          config: newChartConfig
+        });
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
     });
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
   // create each config
 
 
