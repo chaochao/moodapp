@@ -14,6 +14,7 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
   var self = this;
   $scope.chartConfig = MoodServices.genHighChartBasicConfig();
   $scope.chartId = 'ownchart';
+  $scope.loadingCompleted = false;
   var moodUrl = '/api/users/' + AuthFactory.currentUserId + '/moods';
   $scope.isLoggedIn = function() {
     return AuthFactory.isLoggedIn;
@@ -31,7 +32,8 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
         $scope.chartConfig.series.push({
           name: 'mood',
           data: moodLevelArray
-        })
+        });
+        $scope.loadingCompleted = true;
       })
       .catch(function(err) {
         console.log(err);
@@ -69,12 +71,12 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodServices) {
   var self = this;
   $scope.title = "scope other";
   this.title = " self other";
+  $scope.loadingCompleted = false;
   $scope.chartConfigs = []
   $scope.moodPointsArray = [];
   var originalMoodsArray = [];
   userUrl = '/api/users';
   $http.get(userUrl).then(function(response) {
-
       response.data.forEach(function(user) {
         if (AuthFactory.isLoggedIn) {
           if (user._id !== AuthFactory.currentUserId) {
@@ -100,6 +102,7 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodServices) {
           config: newChartConfig
         });
       });
+      $scope.loadingCompleted = true;
     })
     .catch(function(err) {
       console.log(err);
