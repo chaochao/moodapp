@@ -11,14 +11,15 @@
     <!-- toolkit.min.css is a custom css package from twitter-->
     <link href="twitter/toolkit.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel='stylesheet' href='node_modules/angular-loading-bar/build/loading-bar.min.css' type='text/css' media='all' />
      <!-- prevent show data when it's not ready-->
-     <!-- <style type="text/css">
+      <style type="text/css">
       .ng-cloak, [ng-cloak], [ng\ng-cloak] {
         display: none !important;
       }
-    </style>-->
+    </style>
   </head>
-  <body class="with-top-navbar">
+  <body ng-cloak class="with-top-navbar">
     <nav-bar></nav-bar>
     <flash-message name="login-flash"></flash-message>
     <div class="container p-t-md" ng-view></div>
@@ -28,6 +29,7 @@
     <script src="node_modules/angular/angular.js"></script>
     <!-- Other ref-->
     <script src="twitter/toolkit.min.js"></script>
+    <script src="node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="node_modules/highcharts/highcharts.js"></script>
     <script src="node_modules/angular-route/angular-route.js"></script>
     <script src="node_modules/angular-jwt/dist/angular-jwt.js"></script>
