@@ -2,7 +2,51 @@
   <div class="container">
     <div calss ="row">
       <div class="col-md-3">
+        <div class="panel panel-default panel-profile m-b-md">
+          <div class="panel-heading" style="background-image: url(assets/img/iceland.jpg);"></div>
+          <div class="panel-body text-center">
+            <a href="profile/index.html">
+              <img
+                class="panel-profile-img"
+                src="assets/img/avatar-dhg.png">
+            </a>
 
+            <h5 class="panel-title">
+              <a class="text-inherit" href="profile/index.html">{{currentUser.username}}</a>
+            </h5>
+
+            <p class="m-b-md">{{currentUser.description || "this dude is so lazy..."}}</p>
+
+            <ul class="panel-menu">
+              <li class="panel-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Following
+                  <h5 class="m-y-0">{{currentUser.follows.length || 0}} </h5>
+                </a>
+              </li>
+
+              <li class="panel-menu-item">
+                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                  Followers
+                  <h5 class="m-y-0">{{currentUser.followers.length || 0}}</h5>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default visible-md-block visible-lg-block">
+          <div class="panel-body">
+            <h5 class="m-t-0">About <small>· <a href="#">Edit</a></small></h5>
+            <ul class="list-unstyled list-spaced">
+              <li><span class="text-muted icon icon-calendar m-r"></span>Went to <a href="#">Oh, Canada</a>
+              <li><span class="text-muted icon icon-users m-r"></span>Became friends with <a href="#">Obama</a>
+              <li><span class="text-muted icon icon-github m-r"></span>Worked at <a href="#">Github</a>
+              <li><span class="text-muted icon icon-home m-r"></span>Lives in <a href="#">San Francisco, CA</a>
+              <li><span class="text-muted icon icon-location-pin m-r"></span>From <a href="#">Seattle, WA</a>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="col-md-9">
         <img class="loading" src="imgs/loading.gif" ng-hide="loadingCompleted" />

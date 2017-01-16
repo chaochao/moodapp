@@ -14,6 +14,10 @@ function routes($routeProvider){
     templateUrl:'angular-app/pages/othermoods.html',
     controller: 'OtherMoodsController as vm'
   })
+  .when('/profile',{
+    templateUrl: 'angular-app/pages/profile.html',
+    controller: 'ProfileController as vm'
+  })
   .otherwise({
     redirectTo: '/'
   })

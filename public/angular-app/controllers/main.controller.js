@@ -7,6 +7,14 @@ function MainController($scope) {
   this.title = " self main"
 }
 
+moodApp.controller('ProfileController', ProfileController)
+
+function ProfileController($scope) {
+  var self = this;
+  $scope.title = "scope ProfileController"
+  this.title = " self ProfileController"
+}
+
 moodApp.controller('OwnMoodController', OwnMoodController)
 
 function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
@@ -14,16 +22,18 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
   var self = this;
   $scope.chartConfig = MoodServices.genHighChartBasicConfig();
   $scope.chartId = 'ownchart';
+  $scope.currentUser = {};
   $scope.loadingCompleted = false;
   var moodUrl = '/api/users/' + AuthFactory.currentUserId + '/moods';
+  var userUrl = '/api/users/' + AuthFactory.currentUserId;
   $scope.isLoggedIn = function() {
     return AuthFactory.isLoggedIn;
   }
-
   if (AuthFactory.isLoggedIn) {
-    $http.get(moodUrl)
+    $http.get(userUrl)
     .then(function(response) {
-      $scope.moods = response.data;
+      $scope.moods = response.data.moods;
+      $scope.currentUser = response.data;
       var moodLevelArray = [];
       $scope.moods.forEach(function(mood) {
         var moodPoint = MoodServices.genMoodPoint(mood);
