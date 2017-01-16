@@ -10,6 +10,7 @@ function MoodServices() {
     var moodTime = new Date(mood.created_at);
     return [moodTime.getTime(), mood.level];
   }
+  // Ugly as hell, need to change soon.
   var ColorMap = {
     '0': '#000000',
     '1': '#090023',

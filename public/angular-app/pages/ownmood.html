@@ -37,7 +37,7 @@
 
         <div class="panel panel-default visible-md-block visible-lg-block">
           <div class="panel-body">
-            <h5 class="m-t-0">About <small>· <a href="#">Edit</a></small></h5>
+            <h5 class="m-t-0">About <small>· <a href="/#!/profile">Edit</a></small></h5>
             <ul class="list-unstyled list-spaced">
               <li><span class="text-muted icon icon-calendar m-r"></span>Went to <a href="#">Oh, Canada</a>
               <li><span class="text-muted icon icon-users m-r"></span>Became friends with <a href="#">Obama</a>
@@ -58,7 +58,7 @@
           <button type="submit" class="btn btn-default-outline">Submit</button>
         </form>
         <ul class="media-list m-t m-b">
-          <li ng-repeat="mood in moods | reverse" class="fade">
+          <li ng-repeat="mood in moods | reverse">
             <mood mood="mood" delete-article="deleteMood(moodId)" ></mood>
           </li>
         </ul>

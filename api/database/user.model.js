@@ -37,6 +37,7 @@ var userShema = new mongoose.Schema({
       index: '2dsphere'
     }
   },
+  avatar_url: String,
   created_at: {
     type: Date,
     default: Date.now
