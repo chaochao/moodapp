@@ -1,6 +1,9 @@
 console.log("directives.controller");
 moodApp.controller('NavBarController', NavBarLoginController)
 function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, jwtHelper, Flash){
+  $("[data-toggle='popover']").popover(); // this should in toolkit
+
+
   var self = this;
   self.title = "NavBarLoginController";
   $scope.loggedInUser = AuthFactory.username;

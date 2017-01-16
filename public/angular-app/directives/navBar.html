@@ -33,16 +33,13 @@
           </a>
         </li>
         <li>
-          <button type="button" class="btn btn-default navbar-btn navbar-btn-avitar" id="avatar-dropdown" 
-              data-toggle="dropdown">
+          <button type="button" class="btn btn-default navbar-btn navbar-btn-avitar" title="Home"
+            data-container="body" data-html="true" data-trigger="Click" data-toggle="popover" data-placement="bottom"
+            data-content='<div><div role="presentation"><a role="menuitem" tabindex="-1" href="#!/profile">Profile</a></div></div>'>
             <img class="img-circle" src="">
           </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="avatar-dropdown">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#!/profile">Profile</a></li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation" ng-show="isLoggedIn()"><a href="" ng-click="logout()">Logout</a></li>
-          </ul>
         </li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
       <form  ng-show="!isLoggedIn()" class="navbar-form navbar-right" role="login" ng-submit="login()">
         <div class="form-group">
