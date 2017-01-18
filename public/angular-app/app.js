@@ -9,4 +9,5 @@ moodApp.config(function($httpProvider){
     return str.join("&");
   };
   $httpProvider.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded; charset=UTF8';
+  $httpProvider.defaults.headers.put['Content-Type']='application/x-www-form-urlencoded; charset=UTF8';
 });

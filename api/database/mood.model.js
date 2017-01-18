@@ -23,6 +23,7 @@ var moodSchema = mongoose.Schema({
 
   },
   location: {
+    address: String,
     country: String,
     state: String,
     province: String,

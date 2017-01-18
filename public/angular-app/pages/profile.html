@@ -3,7 +3,7 @@
     <div class="ProfileHeader-content">
       <div class="ProfileHeader-contentHead">
         <h1 class="ProfileHeader-title">
-        <span class="ProfileHeader-name">{{user.username || "foo"}}
+        <span class="ProfileHeader-name">{{user.username}}
         </span>
         </h1>
         <div class="ProfileHeader-expandActions ProfileEdit-expandActions">
@@ -30,7 +30,7 @@
                 <input type="radio" ng-model="gender" value="female" style="margin-left: 30px;">
                   female
                 <div class="ButtonGroup">
-                  <button class="Button Button--primary Button--blue" ng-click="changeGender">Save
+                  <button class="Button Button--primary Button--blue" ng-click="changeGender()">Save
                   </button>
                   <button class="Button" type="button" ng-click="showGender=!showGender">Cancel
                   </button>

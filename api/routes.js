@@ -29,10 +29,8 @@ router
 router
   .route('/users/:userId')
   .get(middleware.isOwner, userController.getOne)
-  .put(function(req, res) {
-    res.send("put user id");
-  })
-  .delete(userController.deleteOne);
+  .put(middleware.isOwner, userController.editOne)
+  .delete(middleware.isOwner, userController.deleteOne);
 
 router
   .route('/users/:userId/moods')

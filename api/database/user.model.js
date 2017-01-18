@@ -31,6 +31,7 @@ var userShema = new mongoose.Schema({
   },
   age: Number,
   location: {
+    address: String,
     country: String,
     province: String,
     state: String,

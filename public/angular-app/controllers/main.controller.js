@@ -9,11 +9,34 @@ function MainController($scope) {
 
 moodApp.controller('ProfileController', ProfileController)
 
-function ProfileController($scope) {
+function ProfileController($http, $scope, AuthFactory) {
   var self = this;
+  var userUrl = '/api/users/' + AuthFactory.currentUserId;
   $scope.title = "scope ProfileController"
   this.title = " self ProfileController"
   $scope.showGender = true;
+  $http.get(userUrl).then(function(res){
+      $scope.user = res.data;
+      $scope.gender = $scope.user.gender;
+      $scope.description = $scope.user.description;
+  })
+  .catch(function(err){
+    console.log(err);
+  })
+  // may create a service
+  $scope.changeGender = function(){
+    console.log("submit")
+    if($scope.gender !== $scope.user.gender){
+      $http.put(userUrl, {gender: $scope.gender})
+      .then(function(res){
+        $scope.user.gender = res.data.gender;
+      })
+      .catch(function(err){
+        console.log(err);
+      });
+    }
+    $scope.showGender = !$scope.showGender;
+  }
 }
 
 moodApp.controller('OwnMoodController', OwnMoodController)
