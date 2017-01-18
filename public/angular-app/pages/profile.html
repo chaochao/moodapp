@@ -1,1 +1,63 @@
-<p>this is the profile page</p>
+<div class="Card">
+  <div class="ProfileHeader-main">
+    <div class="ProfileHeader-content">
+      <div class="ProfileHeader-contentHead">
+        <h1 class="ProfileHeader-title">
+        <span class="ProfileHeader-name">{{user.username || "foo"}}
+        </span>
+        </h1>
+        <div class="ProfileHeader-expandActions ProfileEdit-expandActions">
+          <a class="Button Button--plain" type="button" href="/#!/ownmood">
+            Back
+          </a>
+        </div>
+      </div>
+      <div class="ProfileEdit-fields">
+        <form class="Field">
+          <h3 class="Field-label">Gender
+          </h3>
+          <div class="Field-content">
+            <div>
+              <input type="radio" value="male" name="gender">
+                male
+              <input type="radio" value="female" name="gender" style="margin-left: 30px;">
+                female
+              <div class="ButtonGroup">
+                <button class="Button Button--primary Button--blue" type="submit">Save
+                </button>
+                <button class="Button" type="button">Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form class="Field">
+          <h3 class="Field-label">About you
+          </h3>
+          <div class="Field-content">
+            <div>
+              <span class="Field-text">
+                <span class="RichText">{{user.description || "this dude is so lazy..."}}
+                </span>
+              </span>
+              <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button">
+              Edit
+              </button>
+            </div>
+          </div>
+        </form>
+        <form class="Field">
+          <h3 class="Field-label">Address
+          </h3>
+          <div class="Field-content">
+            <div class="AddButton">
+              <button class="Button Button--link" type="button">
+              add Address
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
