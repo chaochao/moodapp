@@ -88,25 +88,24 @@ module.exports.deleteOne = function(req, res) {
 // api/users/:userId
 module.exports.editOne = function(req, res){
   var userId = req.params.userId;
-  //some validate
-  console.log(req.body);
-    if(req.body.gender && req.body.gender !== 'male' && req.body.gender !== 'female') {
-      res.status(400).json({message:'gender should be male or female'})
-      return;
+  //some validation
+  if(req.body.gender && req.body.gender !== 'male' && req.body.gender !== 'female') {
+    res.status(400).json({message:'gender should be male or female'})
+    return;
+  }
+  if(req.body.description && req.body.description.length >100){
+    res.status(400).json({message:'too long'})
+    return;
+  }
+  User
+  .findByIdAndUpdate(userId, req.body, {new: true}, function(err,user){
+    if(err){
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(user);
     }
-    if(req.body.description && req.body.description.length >100){
-      res.status(400).json({message:'too long'})
-      return;
-    }
-    User
-    .findByIdAndUpdate(userId, req.body, {new: true}, function(err,user){
-      if(err){
-        console.log(err);
-        res.status(500).json(err);
-      } else {
-        res.status(200).json(user);
-      }
-    });
+  });
 
 }
 
