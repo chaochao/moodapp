@@ -18,15 +18,23 @@
           </h3>
           <div class="Field-content">
             <div>
-              <input type="radio" value="male" name="gender">
-                male
-              <input type="radio" value="female" name="gender" style="margin-left: 30px;">
-                female
-              <div class="ButtonGroup">
-                <button class="Button Button--primary Button--blue" type="submit">Save
+              <div ng-show="showGender">
+                <span class="Field-text">{{user.gender || "male"}}</span>
+                <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" ng-click="showGender=!showGender" type="button">
+                edit
                 </button>
-                <button class="Button" type="button">Cancel
-                </button>
+              </div>
+              <div ng-hide="showGender">
+                <input type="radio" ng-model="gender" value="male" name="gender">
+                  male
+                <input type="radio" ng-model="gender" value="female" style="margin-left: 30px;">
+                  female
+                <div class="ButtonGroup">
+                  <button class="Button Button--primary Button--blue" ng-click="changeGender">Save
+                  </button>
+                  <button class="Button" type="button" ng-click="showGender=!showGender">Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>

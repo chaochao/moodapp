@@ -25,7 +25,10 @@ var userShema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
-  gender: String,
+  gender: {
+    type: String,
+    default: "male"
+  },
   age: Number,
   location: {
     country: String,

@@ -13,6 +13,7 @@ function ProfileController($scope) {
   var self = this;
   $scope.title = "scope ProfileController"
   this.title = " self ProfileController"
+  $scope.showGender = true;
 }
 
 moodApp.controller('OwnMoodController', OwnMoodController)
