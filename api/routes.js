@@ -16,7 +16,7 @@ router
 
 router
   .route('/users')
-  .get(middleware.foo, userController.getAll);
+  .get(userController.getAll);
 
 router
   .route('/login')
@@ -28,7 +28,7 @@ router
 
 router
   .route('/users/:userId')
-  .get(userController.getOne)
+  .get(middleware.isOwner, userController.getOne)
   .put(function(req, res) {
     res.send("put user id");
   })
@@ -36,14 +36,14 @@ router
 
 router
   .route('/users/:userId/moods')
-  .post(moodsController.createOne)
-  .get(moodsController.getAll)
-  .delete(moodsController.deleteAll);
+  .post(middleware.isOwner, moodsController.createOne)
+  .get(middleware.isOwner, moodsController.getAll)
+  .delete(middleware.isOwner, moodsController.deleteAll);
 
 router
   .route('/users/:userId/moods/:moodId')
-  .get(moodsController.getOne)
-  .put(moodsController.editOne)
-  .delete(moodsController.deleteOne)
+  .get(middleware.isOwner, moodsController.getOne)
+  .put(middleware.isOwner, moodsController.editOne)
+  .delete(middleware.isOwner, moodsController.deleteOne)
 
 module.exports = router;

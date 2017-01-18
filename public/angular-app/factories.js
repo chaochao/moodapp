@@ -21,7 +21,7 @@ function AuthInterceptor($location, $q, $window, AuthFactory) {
   function request(config) {
     config.headers = config.headers || {};
     if ($window.sessionStorage.token) {
-      config.headers.Authorization = $window.sessionStorage.token;
+      config.headers.authorization = $window.sessionStorage.token;
     }
     return config;
   }
