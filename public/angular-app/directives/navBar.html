@@ -8,19 +8,19 @@
       <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#!/">
-        <img src="" alt="brand">
+        <img src="" alt="LOGO">
       </a>
     </div>
     <div class="navbar-collapse collapse" id="navbar-collapse-main">
       <ul class="nav navbar-nav hidden-xs">
         <li class="active">
-          <a href="#!/">Home</a>
+          <a href="#!/">布告栏</a>
         </li>
         <li>
-          <a href="#!/ownmood">Your Mood</a>
+          <a href="#!/ownmood">你的心情</a>
         </li>
         <li>
-          <a href="#!/othermoods">Other Moods</a>
+          <a href="#!/othermoods">其他人的心情</a>
         </li>
       </ul>
       <ul ng-show="isLoggedIn()" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
@@ -39,13 +39,13 @@
             <img class="img-circle" src="">
           </button>
         </li>
-        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">Logout</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">注销</a></li>
       </ul>
       <form  ng-show="!isLoggedIn()" class="navbar-form navbar-right" role="login" ng-submit="login()">
         <div class="form-group">
-          <input type="text" class="form-control" ng-model="username" placeholder="username">
-          <input type="password" class="form-control" ng-model="password" placeholder="password">
-          <button type="submit"  class="btn btn-default-outline">Login</button>
+          <input type="text" class="form-control" ng-model="username" placeholder="用户名">
+          <input type="password" class="form-control" ng-model="password" placeholder="密码">
+          <button type="submit"  class="btn btn-default-outline">登录</button>
         </div>
       </form>
       <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
