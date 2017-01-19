@@ -1,28 +1,28 @@
-<div class="Card">
-  <div class="ProfileHeader-main">
-    <div class="ProfileHeader-content">
-      <div class="ProfileHeader-contentHead">
-        <h1 class="ProfileHeader-title">
-        <span class="ProfileHeader-name">{{user.username}}
+<div class="card">
+  <div class="profileHeader-main">
+    <div class="profileHeader-content">
+      <div class="profileHeader-contentHead">
+        <h1 class="profileHeader-title">
+        <span class="profileHeader-name">{{user.username}}
         </span>
         </h1>
-        <div class="ProfileHeader-expandActions ProfileEdit-expandActions">
-          <a class="Button Button--plain" type="button" href="/#!/ownmood">
+        <div class="back-button">
+          <a type="button" href="/#!/ownmood">
             Back
           </a>
         </div>
       </div>
-      <div class="ProfileEdit-fields">
-        <form class="Field">
-          <h3 class="Field-label">Gender
-          </h3>
-          <div class="Field-content">
+      <div class="profileEdit-fields">
+        <form class="field">
+          <h4 class="field-label">Gender
+          </h4>
+          <div class="field-content">
             <div>
-              <div ng-show="showGender">
-                <span class="Field-text">{{user.gender || "male"}}</span>
-                <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" ng-click="showGender=!showGender" type="button">
-                edit
-                </button>
+              <div ng-show="showGender" ng-mouseenter="mousehover('showEditGen')" ng-mouseleave="mousehover('showEditGen')">
+                <span class="field-text">{{user.gender || "male"}}</span>
+                <a ng-show="showEditGen" href="" class="field-modify" ng-click="showGender=!showGender">
+                Edit
+                </a>
               </div>
               <div ng-hide="showGender">
                 <input type="radio" ng-model="gender" value="male" name="gender">
@@ -30,41 +30,52 @@
                 <input type="radio" ng-model="gender" value="female" style="margin-left: 30px;">
                   female
                 <div class="ButtonGroup">
-                  <button class="Button Button--primary Button--blue" ng-click="changeGender()">Save
+                  <button class="btn btn-sm btn-primary-outline" ng-click="changeGender()">Save
                   </button>
-                  <button class="Button" type="button" ng-click="showGender=!showGender">Cancel
+                  <button class="btn btn-sm btn-default-outline" type="button" ng-click="showGender=!showGender">Cancel
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </form>
-        <form class="Field">
-          <h3 class="Field-label">About you
-          </h3>
-          <div class="Field-content">
-            <div>
-              <span class="Field-text">
-                <span class="RichText">{{user.description || "this dude is so lazy..."}}
+        <form class="field">
+          <h4 class="field-label">About you
+          </h4>
+          <div class="field-content">
+            <div ng-show="showDesc" ng-mouseenter="mousehover('showEditDesc')" ng-mouseleave="mousehover('showEditDesc')" >
+              <span class="field-text">
+                <span class="RichText">{{user.description || "Add your description"}}
                 </span>
               </span>
-              <button class="Button ModifyButton Field-modify Field-modify-hidden Button--link" type="button">
+              <a ng-show="showEditDesc" href="" class="field-modify" ng-click="showDesc=!showDesc">
               Edit
-              </button>
+              </a>
+            </div>
+            <div ng-hide="showDesc">
+              <textarea row="4" col="50" wrap="hard" maxlength="500" ng-model="description" name="descreption">
+                {{description}}
+              </textarea>
+              <div class="ButtonGroup">
+                <button class="btn btn-sm btn-primary-outline" ng-click="changeDesc()">Save
+                </button>
+                <button class="btn btn-sm btn-default-outline" type="button" ng-click="showDesc=!showDesc">Cancel
+                </button>
+              </div>
             </div>
           </div>
         </form>
-        <form class="Field">
-          <h3 class="Field-label">Address
-          </h3>
-          <div class="Field-content">
+        <!-- <form class="field">
+          <h4 class="field-label">Address
+          </h4>
+          <div class="field-content">
             <div class="AddButton">
-              <button class="Button Button--link" type="button">
+              <button class="btn btn-sm btn-primary-outline" type="button">
               add Address
               </button>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </div>

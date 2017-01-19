@@ -16,19 +16,23 @@
 
 a:hover{text-decoration:none}
 
-.Field {
+.field {
   padding: 30px 0;
   border-bottom: 1px solid #ebeef5;
 }
 
-.Field-modify-hidden:not(:hover){
+/*.field-modify-hidden:not(:hover){
   opacity: 0;
-}
+}*/
 
-.Field-modify {
+.field-modify {
   position: absolute;
   margin-left: 16px;
   line-height: inherit;
   -webkit-transition: opacity .1s;
   transition: opacity .1s;
+}
+
+.back-button{
+  text-align: right;
 }

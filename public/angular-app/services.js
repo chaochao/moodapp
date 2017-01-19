@@ -7,10 +7,10 @@ function MoodServices() {
   }
 
   this.genMoodPoint = function(mood) {
-    var moodTime = new Date(mood.created_at);
-    return [moodTime.getTime(), mood.level];
-  }
-  // Ugly as hell, need to change soon.
+      var moodTime = new Date(mood.created_at);
+      return [moodTime.getTime(), mood.level];
+    }
+    // Ugly as hell, need to change soon.
   var ColorMap = {
     '0': '#000000',
     '1': '#090023',
@@ -64,5 +64,21 @@ function MoodServices() {
       }
     };
 
+  }
+}
+
+moodApp.service('HttpServices', HttpServices);
+
+function HttpServices($http) {
+  this.put = function(url, obj, options) {
+    return $http.put(url, obj, options).catch(function(err) {
+      console.log(err);
+    })
+  }
+
+  this.get = function(url) {
+    return $http.get(url).catch(function(err) {
+      console.log(err);
+    })
   }
 }

@@ -9,33 +9,47 @@ function MainController($scope) {
 
 moodApp.controller('ProfileController', ProfileController)
 
-function ProfileController($http, $scope, AuthFactory) {
+function ProfileController(HttpServices, $scope, AuthFactory) {
   var self = this;
   var userUrl = '/api/users/' + AuthFactory.currentUserId;
-  $scope.title = "scope ProfileController"
-  this.title = " self ProfileController"
+  //need to make it easier... maybe a loop
   $scope.showGender = true;
-  $http.get(userUrl).then(function(res){
+  $scope.showDesc = true;
+  $scope.showEditGen = false;
+  $scope.showEditDesc = false;
+
+  $scope.mousehover = function (attr) {
+    // $scope.showEdit = !$scope.showEdit;
+    $scope[attr] = !$scope[attr];
+  }
+
+  HttpServices.get(userUrl).then(function(res){
       $scope.user = res.data;
+      console.log($scope.user);
       $scope.gender = $scope.user.gender;
       $scope.description = $scope.user.description;
   })
-  .catch(function(err){
-    console.log(err);
-  })
+
   // may create a service
   $scope.changeGender = function(){
-    console.log("submit")
     if($scope.gender !== $scope.user.gender){
-      $http.put(userUrl, {gender: $scope.gender})
+      HttpServices.put(userUrl, {gender: $scope.gender})
       .then(function(res){
         $scope.user.gender = res.data.gender;
-      })
-      .catch(function(err){
-        console.log(err);
       });
     }
     $scope.showGender = !$scope.showGender;
+  }
+
+  $scope.changeDesc = function(){
+    console.log($scope.description);
+    if($scope.description !== $scope.user.description){
+      HttpServices.put(userUrl,{description: $scope.description})
+      .then(function(res){
+        $scope.user.description = res.data.description;
+      });
+    }
+   $scope.showDesc = !$scope.showDesc;
   }
 }
 
