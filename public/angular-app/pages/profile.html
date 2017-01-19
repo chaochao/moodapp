@@ -20,8 +20,10 @@
             <div>
               <div ng-show="showGender" ng-mouseenter="mousehover('showEditGen')" ng-mouseleave="mousehover('showEditGen')">
                 <span class="field-text">{{user.gender || "male"}}</span>
+
                 <a ng-show="showEditGen" href="" class="field-modify" ng-click="showGender=!showGender">
-                Edit
+                  <span class="icon icon-brush"></span>
+                  Edit
                 </a>
               </div>
               <div ng-hide="showGender">
@@ -49,7 +51,8 @@
                 </span>
               </span>
               <a ng-show="showEditDesc" href="" class="field-modify" ng-click="showDesc=!showDesc">
-              Edit
+                <span class="icon icon-brush"></span>
+                Edit
               </a>
             </div>
             <div ng-hide="showDesc">
