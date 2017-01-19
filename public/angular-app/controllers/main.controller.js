@@ -55,10 +55,10 @@ function ProfileController(HttpServices, $scope, AuthFactory) {
 
 moodApp.controller('OwnMoodController', OwnMoodController)
 
-function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
+function OwnMoodController($window, $scope, $http, AuthFactory, MoodChartServices) {
   // when in this page, must logged in
   var self = this;
-  $scope.chartConfig = MoodServices.genHighChartBasicConfig();
+  $scope.chartConfig = MoodChartServices.genHighChartBasicConfig();
   $scope.chartId = 'ownchart';
   $scope.currentUser = {};
   $scope.loadingCompleted = false;
@@ -74,9 +74,9 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
       $scope.currentUser = response.data;
       var moodLevelArray = [];
       $scope.moods.forEach(function(mood) {
-        var moodPoint = MoodServices.genMoodPoint(mood);
+        var moodPoint = MoodChartServices.genMoodPoint(mood);
         moodLevelArray.push(moodPoint);
-        mood.backgroundColor = MoodServices.genBackgroundColor(mood.level);
+        mood.backgroundColor = MoodChartServices.genBackgroundColor(mood.level);
       });
       $scope.chartConfig.series.push({
         name: 'mood',
@@ -99,7 +99,7 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
     }
     $http.post(moodUrl, newMood).then(function(res) {
       // For display
-      res.data.mood.backgroundColor = MoodServices.genBackgroundColor(res.data.mood.level)
+      res.data.mood.backgroundColor = MoodChartServices.genBackgroundColor(res.data.mood.level)
       $scope.moods.push(res.data.mood);
       $scope.chartConfig.series[0].data.push(moodPoint);
       $scope.newLevel = '';
@@ -113,7 +113,7 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodServices) {
 
 moodApp.controller('OtherMoodsController', OtherMoodsController)
 
-function OtherMoodsController($http, $scope, AuthFactory, MoodServices) {
+function OtherMoodsController($http, $scope, AuthFactory, MoodChartServices) {
   var self = this;
   $scope.title = "scope other";
   this.title = " self other";
@@ -136,10 +136,10 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodServices) {
       originalMoodsArray.forEach(function(moodsForOneUser, index) {
         var moodPoints = []
         moodsForOneUser.forEach(function(mood) {
-          moodPoints.push(MoodServices.genMoodPoint(mood));
+          moodPoints.push(MoodChartServices.genMoodPoint(mood));
         })
         $scope.moodPointsArray.push(moodPoints);
-        var newChartConfig = MoodServices.genHighChartBasicConfig();
+        var newChartConfig = MoodChartServices.genHighChartBasicConfig();
         newChartConfig.series.push({
           data: moodPoints
         });

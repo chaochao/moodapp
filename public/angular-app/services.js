@@ -1,7 +1,7 @@
 console.log("services");
-moodApp.service('MoodServices', MoodServices);
+moodApp.service('MoodChartServices', MoodChartServices);
 
-function MoodServices() {
+function MoodChartServices() {
   this.foo = function() {
     console.log('bar');
   }
@@ -31,7 +31,7 @@ function MoodServices() {
     return {
       options: {
         chart: {
-          type: 'line'
+          type: 'spline'
         },
         tooltip: {
           style: {
