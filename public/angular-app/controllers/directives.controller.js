@@ -20,7 +20,7 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
     delete $window.sessionStorage.token;
     delete $window.sessionStorage.username;
     delete $window.sessionStorage.currentUserId;
-    $window.location.reload();
+    // $window.location.reload();
     $location.path('/');
   }
 
@@ -45,7 +45,7 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
           $scope.username = ''
           $scope.password = ''
           $location.path('/');
-          $window.location.reload();
+          // $window.location.reload();
           var message = 'Welcom back '+ AuthFactory.username +' Logged In !';
           Flash.create('success', message, 2000, {container: "login-flash"});
         }
