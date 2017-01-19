@@ -1,10 +1,13 @@
 console.log("main.controller");
 moodApp.controller('MainController', MainController)
 
-function MainController($scope) {
+function MainController($scope, AuthFactory) {
   var self = this;
   $scope.title = "scope main"
   this.title = " self main"
+  $scope.isLoggedIn = function(){
+    return AuthFactory.isLoggedIn;
+  }
 }
 
 moodApp.controller('ProfileController', ProfileController)
