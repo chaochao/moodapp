@@ -44,4 +44,19 @@ router
   .put(middleware.isOwner, moodsController.editOne)
   .delete(middleware.isOwner, moodsController.deleteOne)
 
+router
+  .route('/users/:userId/follows')
+  .get(middleware.isOwner, userController.getAllFollows)
+  .post(middleware.isOwner, userController.follows)
+  .delete(middleware.isOwner, userController.unfollowsAll);
+
+router
+  .route('/users/:userId/follows/:followsId')
+  .delete(middleware.isOwner, userController.unfollows);
+
+router
+  .route('/users/:userId/followers')
+  .get(middleware.isOwner, userController.getAllFollowers)
+  .post()
+  .delete(userController.removeAllFollowers);
 module.exports = router;

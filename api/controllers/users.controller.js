@@ -67,6 +67,7 @@ module.exports.getOne = function(req, res) {
   }
   // api/users/:userId
 module.exports.deleteOne = function(req, res) {
+  //TODO: remove from others follower list.
   var userId = req.params.userId;
   Mood
     .remove({
@@ -109,7 +110,6 @@ module.exports.editOne = function(req, res){
 
 }
 
-
 module.exports.login = function(req, res) {
   if (!req.body.username || !req.body.password) {
     res.status(400).json({
@@ -138,4 +138,153 @@ module.exports.login = function(req, res) {
       console.log(err);
       res.status(500).json(err);
     })
+}
+//users/:userId/followers
+module.exports.getAllFollowers = function(req,res){
+  var userId = req.params.userId;
+  User
+  .findById(userId)
+  .populate('followers')
+  .select('followers')
+  .then(function(user){
+  res.status(200).json(user.followers);
+  })
+  .catch(function(err){
+  console.log(err);
+  res.status(500).json(err);
+  });
+}
+
+module.exports.removeAllFollowers = function(req, res) {
+  // ONLY use internally! develop use only.
+  var userId = req.params.userId;
+  User
+  .findByIdAndUpdate(userId, {followers: []}, {new: true}, function(err, user){
+    if(err){
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(user);
+    }
+  });
+}
+
+
+//users/:userId/follows
+module.exports.getAllFollows = function(req, res) {
+  var userId = req.params.userId;
+  User
+  .findById(userId)
+  .populate('follows')
+  .select('follows')
+  .then(function(user){
+    if(user){
+      res.status(200).json(user.follows);
+    } else {
+      res.status(404).json({success: false, message: "no such user."});
+    }
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
+  });
+}
+
+module.exports.follows = function(req, res) {
+  var userId = req.params.userId;
+  var followsId = req.body.follows;
+  if(userId === followsId) {
+    res.status(400).json({success: false, message: "can not follow oneself."});
+    return;
+  }
+  User
+  .findById(userId)
+  .then(function(user){
+    if(user.follows.indexOf(followsId) === -1){
+      user.follows.push(followsId);
+      user.save(function(follower){
+        User
+        .findById(followsId)
+        .then(function(followee){
+          if(followee.followers.indexOf(userId) === -1){
+            followee.followers.push(userId);
+            followee.save(function(followee){
+              res.status(201).json({
+                success:true,
+                followerId: userId,
+                followsId:followsId,
+                message:"save for both follower and followee"});
+            });
+          } else {
+            res.status(400).json({success: false, message: "already in followers list."});
+            return;
+          }
+        });
+      });
+    } else {
+      res.status(400).json({success: false, message: "already in follows list."});
+      return;
+    }
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
+  });
+}
+
+// api/users/:userId/follows/:followsId
+module.exports.unfollows = function(req, res) {
+  var userId = req.params.userId;
+  var unfollowsId = req.params.followsId;
+  User
+  .findById(userId)
+  .then(function(user){
+    var unfollowsIndex = user.follows.indexOf(unfollowsId);
+    //TODO: maybe no need to check
+    if(unfollowsId !== -1) {
+      console.log(unfollowsIndex);
+      user.follows.splice(unfollowsIndex,1);
+      user.save(function(follower){
+        User
+        .findById(unfollowsId)
+        .then(function(followee){
+          var followerIndex = followee.followers.indexOf(userId);
+          if( followerIndex !== -1){
+            followee.followers.splice(followerIndex, 1);
+            followee.save(function(followee){
+              res.status(200).json({
+                success:true,
+                followerId: userId,
+                followsId: unfollowsId,
+                message:"remove for both follower and followee"
+              });
+            });
+          } else {
+            res.status(400).json({success: false, message: "follower not in followers list."});
+            return;
+          }
+        });
+      });
+    } else {
+      res.status(400).json({success: false, message: "followee not in follows list."});
+      return;
+    }
+  })
+  .catch(function(err){
+    console.log(err);
+    res.status(500).json(err);
+  });
+}
+module.exports.unfollowsAll = function(req, res) {
+  // development use only
+  var userId = req.params.userId;
+  User
+  .findByIdAndUpdate(userId, {follows: []}, {new: true}, function(err, user){
+     if(err){
+      console.log(err);
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(user);
+    }
+  });
 }

@@ -19,11 +19,13 @@ var userShema = new mongoose.Schema({
   tags: [String],
   follows: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    unique: true
   }],
   followers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    unique: true
   }],
   gender: {
     type: String,

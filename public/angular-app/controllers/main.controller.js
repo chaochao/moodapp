@@ -126,7 +126,8 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodChartServices) {
   var originalMoodsArray = [];
   userUrl = '/api/users';
   $http.get(userUrl).then(function(response) {
-      response.data.forEach(function(user) {
+      var users = response.data;
+      users.forEach(function(user) {
         if (AuthFactory.isLoggedIn) {
           if (user._id !== AuthFactory.currentUserId) {
             originalMoodsArray.push(user.moods);
@@ -137,12 +138,16 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodChartServices) {
       });
       console.log(originalMoodsArray);
       originalMoodsArray.forEach(function(moodsForOneUser, index) {
+        // data for highchart
         var moodPoints = []
         moodsForOneUser.forEach(function(mood) {
           moodPoints.push(MoodChartServices.genMoodPoint(mood));
         })
         $scope.moodPointsArray.push(moodPoints);
         var newChartConfig = MoodChartServices.genHighChartBasicConfig();
+        if (moodsForOneUser.length > 0){
+          newChartConfig.title.text = moodsForOneUser[0].owner.username;
+        }
         newChartConfig.series.push({
           data: moodPoints
         });
@@ -157,6 +162,4 @@ function OtherMoodsController($http, $scope, AuthFactory, MoodChartServices) {
       console.log(err);
     });
   // create each config
-
-
 }
