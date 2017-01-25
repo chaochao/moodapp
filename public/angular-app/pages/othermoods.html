@@ -1,6 +1,10 @@
 <div>
   <img class="loading" src="imgs/loading.gif" ng-hide="loadingCompleted"/>
 </div>
-<highchart ng-repeat = "chartConfig in chartConfigs" id="{{chartConfig.id}}" config="chartConfig.config"></highchart>
+<div  class ="m-b" ng-repeat = "moodObj in otherMoods" >
+  <highchart id="{{moodObj.user._id}}" config="moodObj.config"></highchart>
+  <a href="" ng-click="follow(moodObj.user._id)"><button class=" follow m-t btn btn-xs btn-info-outline ">关注</button></a>
+  <a href="" ng-click="unfollow(moodObj.user._id)"><button class="unfollow m-t btn btn-xs btn-info-outline ">不再关注</button></a> 
+</div>
 
 
