@@ -125,6 +125,9 @@ function OtherMoodsController(HttpServices, $scope, AuthFactory, MoodChartServic
   var originalMoodsArray = [];
   userUrl = '/api/users/';
   var followUrl = userUrl+AuthFactory.currentUserId+'/follows';
+  $scope.isLoggedIn = function() {
+    return AuthFactory.isLoggedIn;
+  }
   var genMoodConfig = function(user){
     var chartConfig = MoodChartServices.genHighChartBasicConfig();
     var moodDataPoints = [];
