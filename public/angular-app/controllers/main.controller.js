@@ -165,7 +165,7 @@ function OtherMoodsController(HttpServices, $scope, AuthFactory, MoodChartServic
   HttpServices.get(userUrl).then(function(response) {
       var users = response.data;
       users.forEach(function(user){
-        if(user._id === AuthFactory.isLoggedIn){
+        if(AuthFactory.isLoggedIn){
           if(user._id !== AuthFactory.currentUserId){
             $scope.otherMoods.push(genMoodConfig(user));
           }
