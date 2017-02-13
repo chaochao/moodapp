@@ -4,8 +4,9 @@
 <div  class ="m-b" ng-repeat = "moodObj in otherMoods" >
   <highchart id="{{moodObj.user._id}}" config="moodObj.config"></highchart>
   <div ng-show="isLoggedIn()" class="follow-group">
-    <a href="" ng-click="follow(moodObj.user._id)"><button class=" follow m-t btn btn-xs btn-info-outline ">关注</button></a>
-    <a href="" ng-click="unfollow(moodObj.user._id)"><button class="unfollow m-t btn btn-xs btn-info-outline ">不再关注</button></a> 
+    <a ng-hide="followsCheckList[moodObj.user._id]" href="" ng-click="follow(moodObj.user._id)"><button class=" follow m-t btn btn-xs btn-info-outline ">关注</button></a>
+    <a ng-show="followsCheckList[moodObj.user._id]" href="" ng-click="unfollow(moodObj.user._id)"><button class="unfollow m-t btn btn-xs btn-info-outline ">不再关注</button></a>
+    <p>{{followsCheckList}}</p>
   </div>
 </div>
 

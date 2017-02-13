@@ -47,7 +47,7 @@ function AuthInterceptor($location, $q, $window, AuthFactory) {
       delete $window.sessionStorage.token;
       AuthFactory.isLoggedIn = false;
       AuthFactory.username = '';
-      AuthFactory.currentUserId =''
+      AuthFactory.currentUserId = '';
       $location.path('/');
     }
     return $q.reject(rejection);

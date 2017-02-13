@@ -5,7 +5,7 @@ function MainController($scope, AuthFactory) {
   var self = this;
   $scope.title = 'scope main'
   this.title = ' self main'
-  $scope.isLoggedIn = function(){
+  $scope.isLoggedIn = function() {
     return AuthFactory.isLoggedIn;
   }
 }
@@ -21,38 +21,42 @@ function ProfileController(HttpServices, $scope, AuthFactory) {
   $scope.showEditGen = false;
   $scope.showEditDesc = false;
 
-  $scope.mousehover = function (attr) {
+  $scope.mousehover = function(attr) {
     // $scope.showEdit = !$scope.showEdit;
     $scope[attr] = !$scope[attr];
   }
 
-  HttpServices.get(userUrl).then(function(res){
-      $scope.user = res.data;
-      console.log($scope.user);
-      $scope.gender = $scope.user.gender;
-      $scope.description = $scope.user.description;
+  HttpServices.get(userUrl).then(function(res) {
+    $scope.user = res.data;
+    console.log($scope.user);
+    $scope.gender = $scope.user.gender;
+    $scope.description = $scope.user.description;
   })
 
   // may create a service
-  $scope.changeGender = function(){
-    if($scope.gender !== $scope.user.gender){
-      HttpServices.put(userUrl, {gender: $scope.gender})
-      .then(function(res){
-        $scope.user.gender = res.data.gender;
-      });
+  $scope.changeGender = function() {
+    if ($scope.gender !== $scope.user.gender) {
+      HttpServices.put(userUrl, {
+          gender: $scope.gender
+        })
+        .then(function(res) {
+          $scope.user.gender = res.data.gender;
+        });
     }
     $scope.showGender = !$scope.showGender;
   }
 
-  $scope.changeDesc = function(){
+  $scope.changeDesc = function() {
     console.log($scope.description);
-    if($scope.description !== $scope.user.description){
-      HttpServices.put(userUrl,{description: $scope.description})
-      .then(function(res){
-        $scope.user.description = res.data.description;
-      });
+    if ($scope.description !== $scope.user.description) {
+      HttpServices.put(userUrl, {
+          description: $scope.description
+        })
+        .then(function(res) {
+          $scope.user.description = res.data.description;
+        });
     }
-   $scope.showDesc = !$scope.showDesc;
+    $scope.showDesc = !$scope.showDesc;
   }
 }
 
@@ -72,24 +76,24 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodChartService
   }
   if (AuthFactory.isLoggedIn) {
     $http.get(userUrl)
-    .then(function(response) {
-      $scope.moods = response.data.moods;
-      $scope.currentUser = response.data;
-      var moodLevelArray = [];
-      $scope.moods.forEach(function(mood) {
-        var moodPoint = MoodChartServices.genMoodPoint(mood);
-        moodLevelArray.push(moodPoint);
-        mood.backgroundColor = MoodChartServices.genBackgroundColor(mood.level);
-      });
-      $scope.chartConfig.series.push({
-        name: 'mood',
-        data: moodLevelArray
-      });
-      $scope.loadingCompleted = true;
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
+      .then(function(response) {
+        $scope.moods = response.data.moods;
+        $scope.currentUser = response.data;
+        var moodLevelArray = [];
+        $scope.moods.forEach(function(mood) {
+          var moodPoint = MoodChartServices.genMoodPoint(mood);
+          moodLevelArray.push(moodPoint);
+          mood.backgroundColor = MoodChartServices.genBackgroundColor(mood.level);
+        });
+        $scope.chartConfig.series.push({
+          name: 'mood',
+          data: moodLevelArray
+        });
+        $scope.loadingCompleted = true;
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
   }
 
   $scope.submitMoodLevel = function() {
@@ -117,62 +121,71 @@ function OwnMoodController($window, $scope, $http, AuthFactory, MoodChartService
 moodApp.controller('OtherMoodsController', OtherMoodsController)
 
 function OtherMoodsController(HttpServices, $scope, AuthFactory, MoodChartServices) {
-  var self = this;
-  $scope.title = 'scope other';
-  this.title = ' self other';
+  $scope.followsCheckList = {};
   $scope.loadingCompleted = false;
-  $scope.otherMoods = []
-  var originalMoodsArray = [];
-  userUrl = '/api/users/';
-  var followUrl = userUrl+AuthFactory.currentUserId+'/follows';
+  $scope.otherMoods = [];
+  $scope.currentUser = {};
+  // var originalMoodsArray = [];
+  var userUrl = '/api/users/';
+  var followUrl = userUrl + AuthFactory.currentUserId + '/follows';
   $scope.isLoggedIn = function() {
     return AuthFactory.isLoggedIn;
   }
-  var genMoodConfig = function(user){
+  var genMoodConfig = function(user) {
     var chartConfig = MoodChartServices.genHighChartBasicConfig();
     var moodDataPoints = [];
-    user.moods.forEach(function(mood){
+    user.moods.forEach(function(mood) {
       moodDataPoints.push(MoodChartServices.genMoodPoint(mood));
     });
     // set up config
     chartConfig.series.push({
-      data:moodDataPoints
+      data: moodDataPoints
     })
     chartConfig.title.text = user.username;
-    var moodObj ={
-        user: user,
-        config: chartConfig
-        };
+    var moodObj = {
+      user: user,
+      config: chartConfig
+    };
     return moodObj;
   }
 
-  $scope.follow = function(followId){
-    console.log('follow '+followId);
-    HttpServices.post(followUrl, {follows: followId})
-    .then(function(res){
-      console.log(res);
-    })
+  $scope.follow = function(followId) {
+    console.log('follow ' + followId);
+    HttpServices.post(followUrl, {
+        follows: followId
+      })
+      .then(function(res) {
+        console.log(res);
+        $scope.followsCheckList[followId] = true;
+      })
   };
-  $scope.unfollow= function(unfollowId){
-    var unfollowUrl = followUrl+'/'+unfollowId;
-    console.log('unfollow ' +unfollowUrl);
+  $scope.unfollow = function(unfollowId) {
+    var unfollowUrl = followUrl + '/' + unfollowId;
+    console.log('unfollow ' + unfollowUrl);
     HttpServices.delete(unfollowUrl)
-    .then(function(res){
-      console.log(res);
-    })
+      .then(function(res) {
+        console.log(res);
+        $scope.followsCheckList[unfollowId] = false;
+      })
   };
 
   HttpServices.get(userUrl).then(function(response) {
-      var users = response.data;
-      users.forEach(function(user){
-        if(AuthFactory.isLoggedIn){
-          if(user._id !== AuthFactory.currentUserId){
-            $scope.otherMoods.push(genMoodConfig(user));
-          }
-        } else {
+    var users = response.data;
+    users.forEach(function(user) {
+      if (AuthFactory.isLoggedIn) {
+        if (user._id !== AuthFactory.currentUserId) {
           $scope.otherMoods.push(genMoodConfig(user));
+        } else {
+          $scope.currentUser = user;
         }
-      })
-      $scope.loadingCompleted = true;
-    });
+      } else {
+        $scope.otherMoods.push(genMoodConfig(user));
+      }
+    })
+    $scope.loadingCompleted = true;
+  }).then(function(response) {
+    $scope.otherMoods.forEach(function(mood) {
+      $scope.followsCheckList[mood.user._id] = ($scope.currentUser.follows.indexOf(mood.user._id) > -1);
+    })
+  });
 }

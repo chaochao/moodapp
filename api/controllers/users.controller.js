@@ -241,7 +241,6 @@ module.exports.unfollows = function(req, res) {
   .then(function(user){
     var unfollowsIndex = user.follows.indexOf(unfollowsId);
     if(unfollowsIndex !== -1) {
-      // console.log(unfollowsIndex);
       user.follows.splice(unfollowsIndex,1);
       user.save(function(follower){
         User

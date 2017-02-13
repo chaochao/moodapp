@@ -5,13 +5,10 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
 
 
   var self = this;
-  self.title = "NavBarLoginController";
-  $scope.loggedInUser = AuthFactory.username;
   $scope.isLoggedIn = function(){
     return AuthFactory.isLoggedIn;
   }
   $scope.logout = function(){
-    console.log('logout');
     var message = 'See you '+ AuthFactory.username +'!';
     Flash.create('danger', message, 2000, {container: "login-flash"});
     AuthFactory.isLoggedIn = false;
@@ -39,8 +36,9 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
           AuthFactory.isLoggedIn = true;
           AuthFactory.username = decrptToken.username;
           AuthFactory.currentUserId = decrptToken.id;
-          $window.sessionStorage.username = decrptToken.username;
+
           $window.sessionStorage.token = res.data.token;
+          $window.sessionStorage.username = decrptToken.username;
           $window.sessionStorage.currentUserId = decrptToken.id;
           $scope.username = ''
           $scope.password = ''
