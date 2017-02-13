@@ -6,7 +6,6 @@
   <div ng-show="isLoggedIn()" class="follow-group">
     <a ng-hide="followsCheckList[moodObj.user._id]" href="" ng-click="follow(moodObj.user._id)"><button class=" follow m-t btn btn-xs btn-info-outline ">关注</button></a>
     <a ng-show="followsCheckList[moodObj.user._id]" href="" ng-click="unfollow(moodObj.user._id)"><button class="unfollow m-t btn btn-xs btn-info-outline ">不再关注</button></a>
-    <p>{{followsCheckList}}</p>
   </div>
 </div>
 
