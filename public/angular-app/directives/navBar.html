@@ -14,13 +14,13 @@
     <div class="navbar-collapse collapse" id="navbar-collapse-main">
       <ul class="nav navbar-nav hidden-xs">
         <li class="active">
-          <a href="#!/">布告栏</a>
+          <a href="#!/">Main</a>
         </li>
         <li>
-          <a href="#!/ownmood">你的心情</a>
+          <a href="#!/ownmood">How you feel</a>
         </li>
         <li>
-          <a href="#!/othermoods">他人的心情</a>
+          <a href="#!/othermoods">Others</a>
         </li>
       </ul>
       <ul ng-show="isLoggedIn()" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
@@ -36,13 +36,13 @@
             <img class="img-circle" src="">
           </button>
         </li>
-        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">注销</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">logout</a></li>
       </ul>
       <form  ng-show="!isLoggedIn()" class="navbar-form navbar-right" role="login" ng-submit="login()">
         <div class="form-group">
           <input type="text" class="form-control" ng-model="username" placeholder="用户名">
           <input type="password" class="form-control" ng-model="password" placeholder="密码">
-          <button type="submit"  class="btn btn-default-outline">登录</button>
+          <button type="submit"  class="btn btn-default-outline">Sign in</button>
         </div>
       </form>
       <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
