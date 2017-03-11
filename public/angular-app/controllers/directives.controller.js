@@ -51,7 +51,7 @@ function NavBarLoginController( $scope, $location, $http, AuthFactory, $window, 
       .catch(function(err){
         console.log(err);
         $scope.username = ''
-          $scope.password = ''
+        $scope.password = ''
         var message = 'Sorry, wrong username or password.';
         Flash.create('danger', message, 2000, {container: "login-flash"});
       });  
