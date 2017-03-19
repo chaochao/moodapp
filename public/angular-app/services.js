@@ -42,10 +42,10 @@ function MoodChartServices() {
       },
       series: [],
       title: {
-        text: '你的心情日记'
+        text: 'Your mood'
       },
       subtitle: {
-        text: '记录点点滴滴',
+        text: '',
         x: 0
       },
       loading: false,
