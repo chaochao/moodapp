@@ -7,7 +7,7 @@ function routes($routeProvider){
     controller: 'MainController as vm'
   })
   .when('/ownmood', {
-    templateUrl:'angular-app/pages/ownmood.html',
+    templateUrl:'angular-app/pages/onemood.html',
     controller: 'OwnMoodController as vm'
   })
   .when('/othermoods', {
@@ -25,7 +25,7 @@ function routes($routeProvider){
   .when('/followers',{
     templateUrl: 'angular-app/pages/followers.html',
     controller: 'FollowerController as vm'
-  })
+  }) // need to add visitor page for next step
   .otherwise({
     redirectTo: '/'
   })
