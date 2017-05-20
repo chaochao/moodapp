@@ -22,7 +22,8 @@ function mood(){
   }
 }
 
-moodApp.directive('personcard', personcard);
+// if capitcal it will auto translate to person-card
+moodApp.directive('personCard', personcard);
 function personcard(){
   return {
     restrict: 'E',
