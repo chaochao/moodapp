@@ -139,7 +139,7 @@ module.exports.login = function(req, res) {
       res.status(500).json(err);
     })
 }
-//users/:userId/followers
+//api/users/:userId/followers
 module.exports.getAllFollowers = function(req,res){
   var userId = req.params.userId;
   User
@@ -170,7 +170,7 @@ module.exports.removeAllFollowers = function(req, res) {
 }
 
 
-//users/:userId/follows
+//api/users/:userId/follows
 module.exports.getAllFollows = function(req, res) {
   var userId = req.params.userId;
   User

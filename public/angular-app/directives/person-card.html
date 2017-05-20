@@ -1,0 +1,29 @@
+<div class="panel panel-default panel-profile m-b-md">
+  <div class="panel-heading"></div>
+  <div class="panel-body text-center">
+    <a href="profile/index.html">
+      <img
+      class="panel-profile-img"
+      src="assets/img/avatar-dhg.png">
+    </a>
+    <h5 class="panel-title">
+    <a class="text-inherit" href="#!/profile">{{person.name}}</a>
+    </h5>
+    <p class="m-b-md">{{person.description || "this dude is so lazy..."}}</p>
+    <ul class="panel-menu">
+      <li class="panel-menu-item">
+        <a href="#!/followings" class="text-inherit" >
+          Following
+          <h5 class="m-y-0">{{person.follows.length || 0}} </h5>
+        </a>
+      </li>
+      <li class="panel-menu-item">
+        <a href="#!/followers" class="text-inherit" >
+          Followers
+          <h5 class="m-y-0">{{person.followers.length || 0}}</h5>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+

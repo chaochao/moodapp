@@ -12,21 +12,21 @@
             </a>
 
             <h5 class="panel-title">
-              <a class="text-inherit" href="profile/index.html">{{currentUser.username}}</a>
+              <a class="text-inherit" href="#!/profile">{{currentUser.username}}</a>
             </h5>
 
             <p class="m-b-md">{{currentUser.description || "this dude is so lazy..."}}</p>
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
-                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                <a href="#!/followings" class="text-inherit" >
                   Following
                   <h5 class="m-y-0">{{currentUser.follows.length || 0}} </h5>
                 </a>
               </li>
 
               <li class="panel-menu-item">
-                <a href="#userModal" class="text-inherit" data-toggle="modal">
+                <a href="#!/followers" class="text-inherit" >
                   Followers
                   <h5 class="m-y-0">{{currentUser.followers.length || 0}}</h5>
                 </a>

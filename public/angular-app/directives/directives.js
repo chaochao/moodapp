@@ -21,3 +21,15 @@ function mood(){
     }
   }
 }
+
+moodApp.directive('personcard', personcard);
+function personcard(){
+  return {
+    restrict: 'E',
+    templateUrl:'angular-app/directives/person-card.html',
+    replace: true,
+    scope:{
+      person: '='
+    }
+  }
+}

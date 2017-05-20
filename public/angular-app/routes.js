@@ -18,6 +18,14 @@ function routes($routeProvider){
     templateUrl: 'angular-app/pages/profile.html',
     controller: 'ProfileController as vm'
   })
+  .when('/followings',{
+    templateUrl: 'angular-app/pages/followings.html',
+    controller: 'FollowingController as vm'
+  })
+  .when('/followers',{
+    templateUrl: 'angular-app/pages/followers.html',
+    controller: 'FollowerController as vm'
+  })
   .otherwise({
     redirectTo: '/'
   })

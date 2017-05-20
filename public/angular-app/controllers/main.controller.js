@@ -189,3 +189,26 @@ function OtherMoodsController(HttpServices, $scope, AuthFactory, MoodChartServic
     })
   });
 }
+
+moodApp.controller('FollowerController',FollowerController)
+
+function FollowerController(HttpServices, $scope, AuthFactory){
+  console.log("this is follower ctr");  
+  $scope.followerList = [];
+}
+
+moodApp.controller('FollowingController',FollowingController)
+
+function FollowingController(HttpServices, $scope, AuthFactory){
+  console.log("this is following ctr");
+  // console.log(AuthFactory);
+  var currentUserId = AuthFactory.currentUserId;
+  var followingUrl = '/api/users/'+currentUserId+'/follows';
+  $scope.followList =[];
+  //get following info
+  HttpServices.get(followingUrl).then(function(res){
+    console.log(res);
+    $scope.followList = res.data;
+  })
+}
+
